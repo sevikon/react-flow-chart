@@ -1,5 +1,6 @@
 import { storiesOf } from '@storybook/react'
 import * as React from 'react'
+import { AdvancedFlowChart } from './AdvancedFlowChart'
 import { CustomCanvasOuterDemo } from './CustomCanvasOuter'
 import { CustomLinkDemo } from './CustomLink'
 import { CustomNodeDemo } from './CustomNode'
@@ -13,18 +14,21 @@ import { StressTestDemo } from './StressTest'
 
 storiesOf('State', module)
   .add('Internal React State', InternalReactState)
-  .add('External React State', () => <ExternalReactState />)
+  .add('External React State', () => <ExternalReactState/>)
 
 storiesOf('Custom Components', module)
   .add('Node', CustomNodeDemo)
   .add('Node Inner', CustomNodeInnerDemo)
   .add('Port', CustomPortDemo)
   .add('Canvas Outer', CustomCanvasOuterDemo)
-  .add('Canvas Link', () => <CustomLinkDemo />)
+  .add('Canvas Link', () => <CustomLinkDemo/>)
 
 storiesOf('Stress Testing', module)
   .add('default', StressTestDemo)
 
 storiesOf('Sidebar', module)
   .add('Drag and Drop', DragAndDropSidebar)
-  .add('Selected Sidebar', () => <SelectedSidebar />)
+  .add('Selected Sidebar', () => <SelectedSidebar/>)
+
+storiesOf('Sevikon', module)
+  .add('Advanced Flow Chart', () => <AdvancedFlowChart/>)
