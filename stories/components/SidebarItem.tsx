@@ -7,6 +7,7 @@ const Outer = styled.div`
   font-size: 14px;
   background: white;
   cursor: move;
+  border: solid #c5cae9 1px;
 `
 
 export interface ISidebarItemProps {

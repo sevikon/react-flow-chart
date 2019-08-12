@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { FlowChart, IChart } from '../../src'
+import { FlowChart, IChart, ILink } from '../../src'
 import * as actions from '../../src/container/actions'
 import mapValues from '../../src/container/utils/mapValues'
 import { LinkCustomWrapper } from './components/LinkCustom'
@@ -46,11 +46,52 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
     const callbacks = {
       ...this.stateActions,
       onLinkComplete: (...args: any) => {
-        const data = args[0]
+        let data = args[0]
+
+        // fix link -> always should be from port2 to port1
+        if (data.fromPortId === 'port1') {
+          args[0] = {
+            ...data,
+            fromPortId: 'port2',
+            fromNodeId: data.toNodeId,
+            toNodeId: data.fromNodeId,
+            toPortId: 'port1',
+          }
+          data = args[0]
+          const linksFixed = this.state.links
+          const link: ILink = linksFixed[data.linkId]
+
+          const from = {
+            nodeId: data.fromNodeId || '',
+            portId: data.fromPortId || '',
+          }
+
+          if (link && link.to) {
+            linksFixed[link.id] = { ...link, from, to: link.from }
+          }
+
+          this.setState({
+            links: linksFixed,
+          })
+        }
+
         if (data.fromPortId === data.toPortId) {
           const funcArgs = { linkId: data.linkId }
           this.setState(this.stateActions.onLinkClick(funcArgs), () => callbacks.onDeleteKey())
         } else {
+
+          const fromNode = this.state.nodes[data.fromNodeId]
+          const toNode = this.state.nodes[data.toNodeId]
+          const from = fromNode.properties.task
+          const to = toNode.properties.task
+
+          if (from && to && this.props.handleCreateRelation) {
+            this.props.handleCreateRelation({
+              from,
+              to,
+            })
+          }
+
           this.setState(this.stateActions.onLinkComplete(...args), () => this.handleCallback('onLinkComplete', args))
         }
       },
@@ -71,11 +112,18 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
           Node: NodeCustom,
           Port: PortCustom,
           NodeInner: ({ node }) => NodeInnerDefaultWrapper({
-            node, props: {
+            node,
+            props: {
+              startContent: this.props.startContent,
+              endContent: this.props.endContent,
+              taskContent: this.props.taskContent,
               tasks,
               distances,
               onRemove: ({ node: nodeInner }) => {
                 const data = { nodeId: nodeInner.id, taskId: nodeInner.properties.taskId }
+                if (nodeInner.properties.task) {
+                  this.props.handleDeleteTaskRelations && this.props.handleDeleteTaskRelations(nodeInner.properties.task)
+                }
                 this.setState(this.stateActions.onNodeClick(data), () => callbacks.onDeleteKey(data))
               },
               onChange: ({ name, value }) => {
@@ -89,6 +137,18 @@ export class FlowChartWithState extends React.Component<IFlowChartWithStateProps
           }),
           Link: (props) => LinkCustomWrapper(props, {
             onDelete: (link) => {
+              if (link.from.nodeId && link.to.nodeId) {
+                const fromNode = this.state.nodes[link.from.nodeId]
+                const toNode = this.state.nodes[link.to.nodeId]
+                const from = fromNode.properties.task
+                const to = toNode.properties.task
+                if (from && to && this.props.handleDeleteRelation) {
+                  this.props.handleDeleteRelation({
+                    from,
+                    to,
+                  })
+                }
+              }
               const data = { linkId: link.id }
               this.setState(this.stateActions.onLinkClick(data), () => callbacks.onDeleteKey(data))
             },

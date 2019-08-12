@@ -27,22 +27,37 @@ const NodeInnerDefault = ({ node, props }: INodeInnerDefaultWrapperProps) => {
   if (node.type === 'output-only') {
     return (
       <Outer>
-        <p>START</p>
+        {props.startContent && props.startContent()}
+        {!props.startContent && <p>START</p>}
       </Outer>
     )
   } else if (node.type === 'input-only') {
     return (
       <Outer>
-        <p>END</p>
-        <div className="distance">{distance}</div>
+        {props.endContent && props.endContent(distance)}
+        {!props.endContent && <div>
+            <p>END</p>
+            <div className="distance">{distance}</div>
+        </div>}
       </Outer>
     )
   } else {
     return (
       <OuterTask>
-        {currentTask.id}
+        {props.taskContent && props.taskContent(currentTask)}
+
+        {!props.taskContent && currentTask.id}
+
+        {!props.taskContent && <div className="distance">{distance}</div>}
+
+        {!props.taskContent && <CustomInput
+            onChange={props.onChange}
+            value={currentTask.points ? currentTask.points.toString() : ''}
+        />}
+
         <i
           style={{
+            width: '24px', height: '24px',
             position: 'absolute',
             top: 0,
             right: 0,
@@ -52,16 +67,9 @@ const NodeInnerDefault = ({ node, props }: INodeInnerDefaultWrapperProps) => {
           }}
         >
           <svg style={{ width: '24px', height: '24px', cursor: 'pointer' }} viewBox="0 0 24 24">
-            <path fill="black" d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
+            <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z"/>
           </svg>
         </i>
-
-        <div className="distance">{distance}</div>
-
-        <CustomInput
-          onChange={props.onChange}
-          value={currentTask.points ? currentTask.points.toString() : ''}
-        />
 
       </OuterTask>
     )

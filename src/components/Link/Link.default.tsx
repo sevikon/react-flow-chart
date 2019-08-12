@@ -1,7 +1,9 @@
 import * as React from 'react'
 import { generateCurvePath, ILink, IOnLinkClick, IOnLinkMouseEnter, IOnLinkMouseLeave, IPosition } from '../../'
+import { COLOR_OUTPUT } from '../../../stories/advanced/types'
 
 export interface ILinkDefaultProps {
+  color?: string,
   link: ILink
   startPos: IPosition
   endPos: IPosition
@@ -13,15 +15,16 @@ export interface ILinkDefaultProps {
 }
 
 export const LinkDefault = ({
-  link,
-  startPos,
-  endPos,
-  onLinkMouseEnter,
-  onLinkMouseLeave,
-  onLinkClick,
-  isHovered,
-  isSelected,
-}: ILinkDefaultProps) => {
+                              link,
+                              startPos,
+                              endPos,
+                              onLinkMouseEnter,
+                              onLinkMouseLeave,
+                              onLinkClick,
+                              isHovered,
+                              isSelected,
+                              color = COLOR_OUTPUT,
+                            }: ILinkDefaultProps) => {
   const points = generateCurvePath(startPos, endPos)
 
   return (
@@ -30,19 +33,19 @@ export const LinkDefault = ({
         r="4"
         cx={startPos.x}
         cy={startPos.y}
-        fill="cornflowerblue"
+        fill={color}
       />
       {/* Main line */}
       <path
         d={points}
-        stroke="cornflowerblue"
+        stroke={color}
         strokeWidth="3"
         fill="none"
       />
       {/* Thick line to make selection easier */}
       <path
         d={points}
-        stroke="cornflowerblue"
+        stroke={color}
         strokeWidth="20"
         fill="none"
         strokeLinecap="round"
@@ -52,13 +55,13 @@ export const LinkDefault = ({
         onClick={(e) => {
           onLinkClick({ linkId: link.id })
           e.stopPropagation()
-        } }
+        }}
       />
       <circle
         r="4"
         cx={endPos.x}
         cy={endPos.y}
-        fill="cornflowerblue"
+        fill={color}
       />
     </svg>
   )

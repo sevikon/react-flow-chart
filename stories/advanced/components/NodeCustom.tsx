@@ -19,7 +19,7 @@ const OutputNode = styled.div`
   border-radius: 10px;
 `
 
-const Circle = styled.div`
+const TaskNode = styled.div`
   position: absolute;
   width: 240px;
   height: 100px;
@@ -36,24 +36,24 @@ const Circle = styled.div`
  * Make sure it has the same prop signature
  * You'll need to add {...otherProps} so the event listeners are added to your component
  */
-export const NodeCustom = ({ node, children, ...otherProps }: INodeDefaultProps) => {
+export const NodeCustom = React.forwardRef(({ node, children, ...otherProps }: INodeDefaultProps) => {
   if (node.type === 'output-only') {
     return (
-      <InputNode {...otherProps}>
+      <InputNode {...otherProps} className="flow-chart-start-node">
         {children}
       </InputNode>
     )
   } else if (node.type === 'input-only') {
     return (
-      <OutputNode {...otherProps}>
+      <OutputNode {...otherProps} className="flow-chart-end-node">
         {children}
       </OutputNode>
     )
   } else {
     return (
-      <Circle {...otherProps}>
+      <TaskNode {...otherProps} className="flow-chart-task-node">
         {children}
-      </Circle>
+      </TaskNode>
     )
   }
-}
+})

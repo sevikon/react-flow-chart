@@ -1,7 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import { ILinkDefaultProps, LinkDefault } from '../../../src/components/Link'
-import { ILinkCustomCallbacks } from '../types'
+import { COLOR_INPUT, COLOR_LINK_CLOSE, ILinkCustomCallbacks } from '../types'
 
 const Label = styled.div`
   position: absolute;
@@ -9,13 +9,13 @@ const Label = styled.div`
 
 const Button = styled.div`
   position: absolute;
-  top: 0px;
-  right: 0px;
-  padding: 5px;
+  top: 0;
+  right: 0;
+  padding: 0;
   height: 20px;
   width: 20px;
   transform: translate(50%, -50%);
-  background: red;
+  background: ${COLOR_LINK_CLOSE};
   color: white;
   border-radius: 50%;
   transition: 0.3s ease all;
@@ -24,6 +24,7 @@ const Button = styled.div`
   justify-content: center;
   font-size: 16px;
   cursor: pointer;
+  font-weight: bold;
   &:hover {
     box-shadow: 0 10px 20px rgba(0,0,0,.1);
   }
@@ -31,7 +32,7 @@ const Button = styled.div`
 
 const LabelContent = styled.div`
   padding: 5px 10px;
-  background: cornflowerblue;
+  background: ${COLOR_INPUT};
   color: white;
   border-radius: 5px;
   display: flex;

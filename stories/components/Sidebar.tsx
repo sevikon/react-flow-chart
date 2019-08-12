@@ -6,4 +6,5 @@ export const Sidebar = styled.div`
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
+  padding: 15px 10px;
 `

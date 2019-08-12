@@ -1,6 +1,5 @@
 import { storiesOf } from '@storybook/react'
 import * as React from 'react'
-import { AdvancedFlowChart } from './AdvancedFlowChart'
 import { CustomCanvasOuterDemo } from './CustomCanvasOuter'
 import { CustomLinkDemo } from './CustomLink'
 import { CustomNodeDemo } from './CustomNode'
@@ -11,6 +10,7 @@ import { ExternalReactState } from './ExternalReactState'
 import { InternalReactState } from './InternalReactState'
 import { SelectedSidebar } from './SelectedSidebar'
 import { StressTestDemo } from './StressTest'
+import { TasksFlowChartStory } from './TasksFlowChartStory'
 
 storiesOf('State', module)
   .add('Internal React State', InternalReactState)
@@ -30,5 +30,5 @@ storiesOf('Sidebar', module)
   .add('Drag and Drop', DragAndDropSidebar)
   .add('Selected Sidebar', () => <SelectedSidebar/>)
 
-storiesOf('Sevikon', module)
-  .add('Advanced Flow Chart', () => <AdvancedFlowChart/>)
+storiesOf('Tasks Chart', module)
+  .add('Flow Chart For Tasks', () => <TasksFlowChartStory/>)
