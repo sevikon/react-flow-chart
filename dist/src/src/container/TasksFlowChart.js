@@ -20,7 +20,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var styled_components_1 = require("styled-components");
 var components_1 = require("../../stories/components");
-var FlowChartWithStateAdvanced_1 = require("../components/Advanced/FlowChartWithStateAdvanced");
+var __1 = require("../");
 var calculate_1 = require("../components/Advanced/utils/calculate");
 var generateRelations_1 = require("../components/Advanced/utils/generateRelations");
 var getTaskRelations_1 = require("../components/Advanced/utils/getTaskRelations");
@@ -111,7 +111,7 @@ var TasksFlowChart = /** @class */ (function (_super) {
         var _this = this;
         return (React.createElement(components_1.Page, null,
             React.createElement(components_1.Content, null,
-                React.createElement(FlowChartWithStateAdvanced_1.FlowChartWithStateAdvanced, { startContent: this.props.startContent, endContent: this.props.endContent, taskContent: this.props.taskContent, refreshCode: this.state.refreshCode, tasks: this.state.tasks, distances: this.state.distances, initialValue: this.state.chartRelations, handleCreateRelation: this.props.handleCreateRelation, handleDeleteRelation: this.props.handleDeleteRelation, handleDeleteTaskRelations: this.props.handleDeleteTaskRelations, handleCallback: function (name, args, state) {
+                React.createElement(__1.FlowChartWithStateAdvanced, { startContent: this.props.startContent, endContent: this.props.endContent, taskContent: this.props.taskContent, refreshCode: this.state.refreshCode, tasks: this.state.tasks, distances: this.state.distances, initialValue: this.state.chartRelations, handleCreateRelation: this.props.handleCreateRelation, handleDeleteRelation: this.props.handleDeleteRelation, handleDeleteTaskRelations: this.props.handleDeleteTaskRelations, handleCallback: function (name, args, state) {
                         if (state) {
                             if (args) {
                                 switch (name) {

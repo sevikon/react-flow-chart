@@ -1,5 +1,5 @@
 import { IChart, ILink, INode } from '../../../types'
-import { IRelationErrorArray, ITaskGroupType } from '../types'
+import { IRelationErrorArray, ITaskGroupType } from '../../../types/advanced'
 
 export const forEach = (el: object, callback: (val: any) => void) => {
   for (const key in el) {

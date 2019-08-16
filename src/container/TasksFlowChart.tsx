@@ -1,12 +1,12 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { IChart, INode } from '../types'
 import { Content, Page, Sidebar, SidebarItem } from '../../stories/components'
-import { FlowChartWithStateAdvanced } from '../components/Advanced/FlowChartWithStateAdvanced'
-import { ITasksFlowChart, ITasksFlowChartState, ITaskType, IUpdateTask } from '../components/Advanced/types'
+import { FlowChartWithStateAdvanced } from '../'
+import { ITasksFlowChart, ITasksFlowChartState, ITaskType, IUpdateTask } from '../types/advanced'
 import { calculatePaths, forEach } from '../components/Advanced/utils/calculate'
 import { generateRelations } from '../components/Advanced/utils/generateRelations'
 import { getTaskRelations } from '../components/Advanced/utils/getTaskRelations'
+import { IChart, INode } from '../types'
 
 const ErrorDiv = styled.div`
 padding: 10px;

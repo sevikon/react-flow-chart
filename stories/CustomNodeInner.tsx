@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { FlowChartWithState, INodeInnerDefaultProps } from '../src'
+import { FlowChartWithState, INodeInnerDefaultPropsAdvanced } from '../src'
 import { Page } from './components'
 import { chartSimple } from './misc/exampleChartState'
 
@@ -18,7 +18,7 @@ const Input = styled.input`
  * Create the custom component,
  * Make sure it has the same prop signature
  */
-const NodeInnerCustom = ({ node }: INodeInnerDefaultProps) => {
+const NodeInnerCustom = ({ node }: INodeInnerDefaultPropsAdvanced) => {
   if (node.type === 'output-only') {
     return (
       <Outer>

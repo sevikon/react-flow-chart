@@ -1,5 +1,5 @@
 import { IChart, ILink, INode } from '../../../types'
-import { IChartLinksArray, IChartNodesArray, ITaskGroupType, ITaskType } from '../types'
+import { IChartLinksArray, IChartNodesArray, ITaskGroupType, ITaskType } from '../../../types/advanced'
 
 function getStart (id: string, x: number, y: number): INode {
   return { id, type: 'output-only', position: { x, y }, ports: { port2: { id: 'port2', type: 'right', position: { x: 133, y: 65 } } } }

@@ -1,5 +1,5 @@
 import { IChart } from '../../../types'
-import { ITaskGroupType } from '../types'
+import { ITaskGroupType } from '../../../types/advanced'
 
 export function getTaskRelations (tasks: ITaskGroupType, chartRelations: IChart): ITaskGroupType {
 

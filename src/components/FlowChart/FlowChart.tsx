@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {
   CanvasInnerDefault, CanvasOuterDefault, CanvasWrapper, ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, ILink, ILinkDefaultProps,
-  INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragNode,
+  INodeDefaultProps, INodeInnerDefaultPropsAdvanced, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragNode,
   IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove,
   IOnLinkStart, IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange, IPortDefaultProps, IPortsDefaultProps, ISelectedOrHovered,
   LinkDefault, LinkWrapper, NodeDefault, NodeInnerDefault, NodeWrapper, PortDefault, PortsDefault,
@@ -28,7 +28,7 @@ export interface IFlowChartCallbacks {
 export interface IFlowChartComponents {
   CanvasOuter?: React.FunctionComponent<ICanvasOuterDefaultProps>
   CanvasInner?: React.FunctionComponent<ICanvasInnerDefaultProps>
-  NodeInner?: React.FunctionComponent<INodeInnerDefaultProps>
+  NodeInner?: React.FunctionComponent<INodeInnerDefaultPropsAdvanced>
   Ports?: React.FunctionComponent<IPortsDefaultProps>
   Port?: React.FunctionComponent<IPortDefaultProps>
   Node?: React.FunctionComponent<INodeDefaultProps>

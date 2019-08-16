@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, ILinkDefaultProps, INodeDefaultProps, INodeInnerDefaultProps, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragNode, IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange, IPortDefaultProps, IPortsDefaultProps } from '../../';
+import { ICanvasInnerDefaultProps, ICanvasOuterDefaultProps, IChart, ILinkDefaultProps, INodeDefaultProps, INodeInnerDefaultPropsAdvanced, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, IOnDragNode, IOnLinkCancel, IOnLinkClick, IOnLinkComplete, IOnLinkMouseEnter, IOnLinkMouseLeave, IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange, IPortDefaultProps, IPortsDefaultProps } from '../../';
 export interface IFlowChartCallbacks {
     onDragNode: IOnDragNode;
     onDragCanvas: IOnDragCanvas;
@@ -20,7 +20,7 @@ export interface IFlowChartCallbacks {
 export interface IFlowChartComponents {
     CanvasOuter?: React.FunctionComponent<ICanvasOuterDefaultProps>;
     CanvasInner?: React.FunctionComponent<ICanvasInnerDefaultProps>;
-    NodeInner?: React.FunctionComponent<INodeInnerDefaultProps>;
+    NodeInner?: React.FunctionComponent<INodeInnerDefaultPropsAdvanced>;
     Ports?: React.FunctionComponent<IPortsDefaultProps>;
     Port?: React.FunctionComponent<IPortDefaultProps>;
     Node?: React.FunctionComponent<INodeDefaultProps>;

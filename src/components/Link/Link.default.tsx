@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { generateCurvePath, ILink, IOnLinkClick, IOnLinkMouseEnter, IOnLinkMouseLeave, IPosition } from '../../'
-import { COLOR_OUTPUT } from '../Advanced/types'
+import { COLOR_OUTPUT } from '../../types/advanced'
 
 export interface ILinkDefaultProps {
   color?: string,

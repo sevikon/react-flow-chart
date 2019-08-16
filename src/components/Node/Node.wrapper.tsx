@@ -1,7 +1,7 @@
 import * as React from 'react'
 import Draggable from 'react-draggable'
 import {
-  ILink, INode, INodeInnerDefaultProps, IOnDragNode,
+  ILink, INode, INodeInnerDefaultPropsAdvanced, IOnDragNode,
   IOnLinkCancel, IOnLinkComplete, IOnLinkMove, IOnLinkStart,
   IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange,
   IPortDefaultProps, IPortsDefaultProps, IPosition, ISelectedOrHovered, ISize, PortWrapper,
@@ -17,7 +17,7 @@ export interface INodeWrapperProps {
   selectedLink: ILink | undefined
   hoveredLink: ILink | undefined
   isSelected: boolean
-  NodeInner: React.FunctionComponent<INodeInnerDefaultProps>
+  NodeInner: React.FunctionComponent<INodeInnerDefaultPropsAdvanced>
   Ports: React.FunctionComponent<IPortsDefaultProps>
   Port: React.FunctionComponent<IPortDefaultProps>
   onPortPositionChange: IOnPortPositionChange

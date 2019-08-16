@@ -11,4 +11,5 @@ __export(require("./Ports"));
 __export(require("./PortsGroup"));
 __export(require("./Link"));
 __export(require("./FlowChart"));
+__export(require("./Advanced"));
 //# sourceMappingURL=index.js.map
