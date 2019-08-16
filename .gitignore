@@ -9,7 +9,7 @@ yarn.lock
 # Storybook
 storybook-static
 build
-dist
+#dist
 
 # Runtime data
 pids
