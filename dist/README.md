@@ -115,11 +115,11 @@ npm i @mrblenny/react-flow-chart
 Most components/types are available as a root level export. Check the storybook demo for more examples.
 
 ```tsx
-import { FlowChartWithState } from "@mrblenny/react-flow-chart";
+import { FlowChartWithStateAdvanced } from "@mrblenny/react-flow-chart";
 import { chartSimple } from "@mrblenny/react-flow-chart/stories/misc/exampleChartState"; // Demo chart state
 
 const Example = (
-  <FlowChartWithState initialValue={chartSimple} />
+  <FlowChartWithStateAdvanced initialValue={chartSimple} />
 );
 ```
 

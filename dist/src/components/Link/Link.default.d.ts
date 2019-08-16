@@ -1,6 +1,7 @@
 /// <reference types="react" />
 import { ILink, IOnLinkClick, IOnLinkMouseEnter, IOnLinkMouseLeave, IPosition } from '../../';
 export interface ILinkDefaultProps {
+    color?: string;
     link: ILink;
     startPos: IPosition;
     endPos: IPosition;
@@ -10,4 +11,4 @@ export interface ILinkDefaultProps {
     isHovered: boolean;
     isSelected: boolean;
 }
-export declare const LinkDefault: ({ link, startPos, endPos, onLinkMouseEnter, onLinkMouseLeave, onLinkClick, isHovered, isSelected, }: ILinkDefaultProps) => JSX.Element;
+export declare const LinkDefault: ({ link, startPos, endPos, onLinkMouseEnter, onLinkMouseLeave, onLinkClick, isHovered, isSelected, color, }: ILinkDefaultProps) => JSX.Element;

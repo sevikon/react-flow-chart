@@ -1,9 +1,9 @@
 /// <reference types="react" />
-import { DraggableData } from 'react-draggable';
+import { DraggableData, DraggableEvent } from 'react-draggable';
 import { INode, IPort } from './chart';
 import { IPosition, ISize } from './generics';
-export declare type IOnDragNode = (event: MouseEvent, dragData: DraggableData, id: string) => void;
-export declare type IOnDragCanvas = (event: MouseEvent, dragData: DraggableData) => void;
+export declare type IOnDragNode = (event: DraggableEvent, dragData: DraggableData, id: string) => void;
+export declare type IOnDragCanvas = (event: DraggableEvent, dragData: DraggableData) => void;
 export declare type IOnPortPositionChange = (node: INode, port: IPort, position: IPosition) => void;
 export interface IOnLinkBaseEvent {
     linkId: string;

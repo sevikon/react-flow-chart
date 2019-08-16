@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { TasksFlowChart } from './advanced/TasksFlowChart'
+import { TasksFlowChart } from '../src/container/TasksFlowChart'
 
 export class TasksFlowChartStory extends React.Component<{}, {}> {
 

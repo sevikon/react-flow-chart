@@ -4,4 +4,5 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./FlowChartWithState"));
+__export(require("./TasksFlowChart"));
 //# sourceMappingURL=index.js.map

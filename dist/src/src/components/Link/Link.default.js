@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var __1 = require("../../");
-var types_1 = require("../../../stories/advanced/types");
+var types_1 = require("../Advanced/types");
 exports.LinkDefault = function (_a) {
     var link = _a.link, startPos = _a.startPos, endPos = _a.endPos, onLinkMouseEnter = _a.onLinkMouseEnter, onLinkMouseLeave = _a.onLinkMouseLeave, onLinkClick = _a.onLinkClick, isHovered = _a.isHovered, isSelected = _a.isSelected, _b = _a.color, color = _b === void 0 ? types_1.COLOR_OUTPUT : _b;
     var points = __1.generateCurvePath(startPos, endPos);
