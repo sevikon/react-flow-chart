@@ -83,18 +83,20 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
               children={children}
               onClick={onCanvasClick}
               tabIndex={0}
-              onKeyDown={ (e: React.KeyboardEvent) => {
+              onKeyDown={(e: React.KeyboardEvent) => {
                 if (e.keyCode === 46) {
                   onDeleteKey()
                 }
               }}
-              onDrop={ (e) => {
+              onDrop={(e) => {
                 const data = JSON.parse(e.dataTransfer.getData(REACT_FLOW_CHART))
-                onCanvasDrop({ data, position: {
-                  x: e.clientX - position.x,
-                  y: e.clientY - position.y,
-                }})
-              } }
+                onCanvasDrop({
+                  data, position: {
+                    x: e.clientX - position.x - this.state.offsetX - (data.offsetX || 0),
+                    y: e.clientY - position.y - this.state.offsetY - (data.offsetY || 0),
+                  },
+                })
+              }}
               onDragOver={(e) => e.preventDefault()}
             />
           </Draggable>

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
+import { COLOR_INPUT, COLOR_OUTPUT } from '../../types'
 import { IPortDefaultProps } from '../Port'
-import { COLOR_INPUT, COLOR_OUTPUT } from '../../types/advanced'
 
 const PortDefaultOuter = styled.div`
   width: 20px;

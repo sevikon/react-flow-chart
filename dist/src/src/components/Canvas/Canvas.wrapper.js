@@ -62,6 +62,7 @@ var CanvasWrapper = /** @class */ (function (_super) {
         window.removeEventListener('resize', this.updateSize);
     };
     CanvasWrapper.prototype.render = function () {
+        var _this = this;
         var _a = this.props, ComponentInner = _a.ComponentInner, ComponentOuter = _a.ComponentOuter, position = _a.position, onDragCanvas = _a.onDragCanvas, children = _a.children, onCanvasClick = _a.onCanvasClick, onDeleteKey = _a.onDeleteKey, onCanvasDrop = _a.onCanvasDrop;
         return (React.createElement(CanvasContext_1.default.Provider, { value: { offsetX: this.state.offsetX, offsetY: this.state.offsetY } },
             React.createElement(ComponentOuter, { ref: this.ref },
@@ -72,10 +73,12 @@ var CanvasWrapper = /** @class */ (function (_super) {
                             }
                         }, onDrop: function (e) {
                             var data = JSON.parse(e.dataTransfer.getData(__1.REACT_FLOW_CHART));
-                            onCanvasDrop({ data: data, position: {
-                                    x: e.clientX - position.x,
-                                    y: e.clientY - position.y,
-                                } });
+                            onCanvasDrop({
+                                data: data, position: {
+                                    x: e.clientX - position.x - _this.state.offsetX - (data.offsetX || 0),
+                                    y: e.clientY - position.y - _this.state.offsetY - (data.offsetY || 0),
+                                },
+                            });
                         }, onDragOver: function (e) { return e.preventDefault(); } })))));
     };
     return CanvasWrapper;
