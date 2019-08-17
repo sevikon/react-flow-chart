@@ -111,8 +111,6 @@ export function generateRelations (tasks: ITaskGroupType): IChart {
     }
   }
 
-  console.log(tasksMap)
-
   const getLink = (id: string, fromId: string, toId: string): ILink | null => {
     if (!nodes[fromId] || !nodes[toId]) {
       return null

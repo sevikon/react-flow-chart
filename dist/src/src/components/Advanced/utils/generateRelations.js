@@ -102,7 +102,6 @@ function generateRelations(tasks) {
             }
         }
     }
-    console.log(tasksMap);
     var getLink = function (id, fromId, toId) {
         if (!nodes[fromId] || !nodes[toId]) {
             return null;
