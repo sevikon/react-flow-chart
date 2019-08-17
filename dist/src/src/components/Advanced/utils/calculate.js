@@ -43,7 +43,7 @@ exports.calculatePaths = function (tasks, state) {
                     var t = nodesMap[nodeId].properties.task;
                     var d = t && t.points ? parseInt(t.points, 10) : 0;
                     distance_1 += d;
-                    if (t && t.status !== 'Finished') {
+                    if (t && t.status !== 'finished') {
                         status_1 = 'Pending';
                     }
                 });

@@ -21,44 +21,44 @@ export class TasksFlowChartStory extends React.Component<{}, {}> {
       title: 'Task A',
       id: 'taskA',
       points: 20,
-      status: 'Finished',
+      status: 'finished',
       dependencies: [],
     }, {
       title: 'Task B',
       id: 'taskB',
       points: 30,
-      status: 'Finished',
+      status: 'finished',
       dependencies: ['taskA'],
     }, {
       title: 'Task C',
       id: 'taskC',
       points: 40,
-      status: 'Finished',
+      status: 'finished',
       dependencies: ['taskA'],
     }, {
       title: 'Task D',
       id: 'taskD',
       points: 40,
-      status: 'Finished',
+      status: 'finished',
       dependencies: [],
     }, {
       title: 'Task E',
       id: 'taskE',
       points: 40,
-      status: 'Finished',
+      status: 'finished',
       // dependencies: ['taskC', 'taskJ'],
       dependencies: ['taskC'],
     }, {
       title: 'Task F',
       id: 'taskF',
       points: 40,
-      status: 'Finished',
+      status: 'finished',
       dependencies: ['taskD'],
     }, {
       title: 'Task G',
       id: 'taskG',
       points: 40,
-      status: 'Finished',
+      status: 'finished',
       dependencies: ['taskF'],
     }, {
       title: 'Task H',
@@ -109,7 +109,7 @@ export class TasksFlowChartStory extends React.Component<{}, {}> {
             <p>PROJECT END ({distance})</p>
           )}
           taskContent={(task) => (<div
-            style={{ color: task && task.status === 'Finished' ? COLOR_SUCCESS : COLOR_ERROR }}
+            style={{ color: task && task.status === 'finished' ? COLOR_SUCCESS : COLOR_ERROR }}
           >
             <p>{task.id}</p>
             <i

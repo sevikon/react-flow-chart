@@ -51,7 +51,7 @@ export const LinkCustom = (props: ILinkDefaultProps, chart: ILinkChart, callback
   const fromNode = chart.nodes[link.from.nodeId]
 
   if (fromNode) {
-    if (fromNode.type === 'output-only' || (fromNode.properties && fromNode.properties.status === 'Finished')) {
+    if (fromNode.type === 'output-only' || (fromNode.properties && fromNode.properties.status === 'finished')) {
       color = COLOR_SUCCESS
     }
   }

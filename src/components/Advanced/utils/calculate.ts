@@ -36,7 +36,7 @@ export const calculatePaths = (tasks: ITaskGroupType, state?: IChart) => {
           const t = nodesMap[nodeId].properties.task
           const d = t && t.points ? parseInt(t.points, 10) : 0
           distance += d
-          if (t && t.status !== 'Finished') {
+          if (t && t.status !== 'finished') {
             status = 'Pending'
           }
         })

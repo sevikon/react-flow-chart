@@ -29,7 +29,7 @@ exports.LinkCustom = function (props, chart, callbacks) {
     var color = advanced_1.COLOR_GREY;
     var fromNode = chart.nodes[link.from.nodeId];
     if (fromNode) {
-        if (fromNode.type === 'output-only' || (fromNode.properties && fromNode.properties.status === 'Finished')) {
+        if (fromNode.type === 'output-only' || (fromNode.properties && fromNode.properties.status === 'finished')) {
             color = advanced_1.COLOR_SUCCESS;
         }
     }
