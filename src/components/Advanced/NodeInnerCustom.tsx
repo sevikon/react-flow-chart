@@ -46,14 +46,15 @@ const NodeInnerDefault = ({ node, props }: INodeInnerDefaultWrapperProps) => {
       <OuterTask>
         {props.taskContent && props.taskContent(currentTask)}
 
-        {!props.taskContent && currentTask.id}
-
-        {!props.taskContent && <div className="distance">{distance}</div>}
-
-        {!props.taskContent && <CustomInput
-            onChange={props.onChange}
-            value={currentTask.points ? currentTask.points.toString() : ''}
-        />}
+        {!props.taskContent && <div>
+          {currentTask.id}
+          {properties.status}
+            <div className="distance">{distance}</div>
+            <CustomInput
+                onChange={props.onChange}
+                value={currentTask.points ? currentTask.points.toString() : ''}
+            />
+        </div>}
 
         <i
           style={{

@@ -72,10 +72,10 @@ function generateRelations(tasks) {
     }
     var calculateBlockHeight = function (taskId) {
         var node = tasksMap[taskId];
-        if (!node.visited) {
+        if (!node.visited || node.visited < 30) {
             var blockHeight_1 = node.children.length;
             if (blockHeight_1 < 1) {
-                blockHeight_1 = blockHeight_1 < 1 ? 1 : blockHeight_1;
+                blockHeight_1 = 1;
             }
             else {
                 blockHeight_1 = 0;
@@ -85,10 +85,13 @@ function generateRelations(tasks) {
                 });
             }
             node.blockHeight = blockHeight_1;
-            node.visited = true;
+            node.visited += 1;
             node.parents.map(function (taskParentId) {
                 calculateBlockHeight(taskParentId);
             });
+        }
+        else if (node.visited >= 30) {
+            node.blockHeight = 3;
         }
     };
     for (var property in tasksMap) {
@@ -99,6 +102,7 @@ function generateRelations(tasks) {
             }
         }
     }
+    console.log(tasksMap);
     var getLink = function (id, fromId, toId) {
         if (!nodes[fromId] || !nodes[toId]) {
             return null;

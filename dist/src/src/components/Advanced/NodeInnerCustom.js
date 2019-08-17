@@ -34,9 +34,11 @@ var NodeInnerDefault = function (_a) {
     else {
         return (React.createElement(OuterTask, null,
             props.taskContent && props.taskContent(currentTask),
-            !props.taskContent && currentTask.id,
-            !props.taskContent && React.createElement("div", { className: "distance" }, distance),
-            !props.taskContent && React.createElement(CustomInput_1.CustomInput, { onChange: props.onChange, value: currentTask.points ? currentTask.points.toString() : '' }),
+            !props.taskContent && React.createElement("div", null,
+                currentTask.id,
+                properties.status,
+                React.createElement("div", { className: "distance" }, distance),
+                React.createElement(CustomInput_1.CustomInput, { onChange: props.onChange, value: currentTask.points ? currentTask.points.toString() : '' })),
             React.createElement("i", { style: {
                     width: '24px', height: '24px',
                     position: 'absolute',

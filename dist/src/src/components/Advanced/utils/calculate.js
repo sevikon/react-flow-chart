@@ -21,16 +21,16 @@ exports.forEach = function (el, callback) {
 exports.calculatePaths = function (tasks, state) {
     var distances = {};
     var errors = [];
+    var nodesMap = {};
     if (state) {
         var links_1 = [];
         exports.forEach(state.links, function (val) {
             links_1.push(val);
         });
-        var nodesMap_1 = {};
         exports.forEach(state.nodes, function (n) {
             var _a = n.properties, properties = _a === void 0 ? {} : _a;
             n.properties = __assign({}, properties, { task: tasks.filter(function (t) { return (t.id === properties.taskId); })[0], ascendants: [] });
-            nodesMap_1[n.id] = n;
+            nodesMap[n.id] = n;
         });
         var calculateNodePath_1 = function (currentNode) {
             if (currentNode) {
@@ -38,15 +38,20 @@ exports.calculatePaths = function (tasks, state) {
                 var _b = properties.task, task = _b === void 0 ? {} : _b;
                 var distance_1 = task.points ? parseInt(task.points, 10) : 0;
                 var ascendants = currentNode.properties.ascendants;
+                var status_1 = task.status || 'Pending';
                 ascendants.map(function (nodeId) {
-                    var t = nodesMap_1[nodeId].properties.task;
+                    var t = nodesMap[nodeId].properties.task;
                     var d = t && t.points ? parseInt(t.points, 10) : 0;
                     distance_1 += d;
+                    if (t && t.status !== 'Finished') {
+                        status_1 = 'Pending';
+                    }
                 });
+                properties.status = status_1;
                 distances[currentNode.id] = distance_1;
-                nodesMap_1[currentNode.id] = currentNode;
+                nodesMap[currentNode.id] = __assign({}, currentNode, { properties: properties });
                 var nextNodes = links_1.filter(function (l) { return (l.from.nodeId === currentNode.id); }).map(function (l) { return l.to.nodeId; });
-                nextNodes.map(function (nodeId) { return (calculateNodePath_1(nodesMap_1[nodeId])); });
+                nextNodes.map(function (nodeId) { return (calculateNodePath_1(nodesMap[nodeId])); });
             }
         };
         var generateAscendants_1 = function (currentNode) {
@@ -58,7 +63,7 @@ exports.calculatePaths = function (tasks, state) {
                     if (ascendants_1.indexOf(nodeId) < 0) {
                         ascendants_1.push(nodeId);
                     }
-                    var prevNode = nodesMap_1[nodeId];
+                    var prevNode = nodesMap[nodeId];
                     if (prevNode) {
                         prevNode.properties.ascendants.map(function (nId) {
                             if (ascendants_1.indexOf(nId) < 0) {
@@ -67,33 +72,33 @@ exports.calculatePaths = function (tasks, state) {
                         });
                     }
                 });
-                nodesMap_1[currentNode.id] = __assign({}, currentNode, { properties: __assign({}, properties, { ascendants: ascendants_1 }) });
+                nodesMap[currentNode.id] = __assign({}, currentNode, { properties: __assign({}, properties, { ascendants: ascendants_1 }) });
                 var nextNodes = links_1.filter(function (l) { return (l.from.nodeId === currentNode.id); }).map(function (l) { return l.to.nodeId; });
                 nextNodes.map(function (nodeId) {
                     if (ascendants_1.indexOf(nodeId) < 0) {
-                        generateAscendants_1(nodesMap_1[nodeId]);
+                        generateAscendants_1(nodesMap[nodeId]);
                     }
                     else {
                         errors.push({
                             type: 'loop',
-                            details: "Loop:  " + nodesMap_1[nodeId].properties.task.id + " -> " + nodesMap_1[currentNode.id].properties.task.id,
+                            details: "Loop:  " + nodesMap[nodeId].properties.task.id + " -> " + nodesMap[currentNode.id].properties.task.id,
                         });
                     }
                 });
             }
         };
-        for (var property in nodesMap_1) {
-            if (nodesMap_1.hasOwnProperty(property)) {
-                var node = nodesMap_1[property];
+        for (var property in nodesMap) {
+            if (nodesMap.hasOwnProperty(property)) {
+                var node = nodesMap[property];
                 if (node.type === 'output-only') {
                     generateAscendants_1(node);
                 }
             }
         }
         if (errors.length === 0) {
-            for (var property in nodesMap_1) {
-                if (nodesMap_1.hasOwnProperty(property)) {
-                    var node = nodesMap_1[property];
+            for (var property in nodesMap) {
+                if (nodesMap.hasOwnProperty(property)) {
+                    var node = nodesMap[property];
                     if (node.type === 'output-only') {
                         calculateNodePath_1(node);
                     }
@@ -101,6 +106,6 @@ exports.calculatePaths = function (tasks, state) {
             }
         }
     }
-    return { distances: distances, errors: errors };
+    return { distances: distances, errors: errors, nodesMap: nodesMap };
 };
 //# sourceMappingURL=calculate.js.map

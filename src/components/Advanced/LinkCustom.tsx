@@ -1,7 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
+import { COLOR_GREY, COLOR_INPUT, COLOR_LINK_CLOSE, COLOR_SUCCESS, ILinkChart, ILinkCustomCallbacks } from '../../types/advanced'
 import { ILinkDefaultProps, LinkDefault } from '../Link'
-import { COLOR_INPUT, COLOR_LINK_CLOSE, ILinkCustomCallbacks } from '../../types/advanced'
 
 const Label = styled.div`
   position: absolute;
@@ -42,13 +42,25 @@ const LabelContent = styled.div`
   cursor: pointer;
 `
 
-export const LinkCustom = (props: ILinkDefaultProps, callbacks: ILinkCustomCallbacks) => {
+export const LinkCustom = (props: ILinkDefaultProps, chart: ILinkChart, callbacks: ILinkCustomCallbacks) => {
   const { startPos, endPos, link } = props
   const centerX = startPos.x + (endPos.x - startPos.x) / 2
   const centerY = startPos.y + (endPos.y - startPos.y) / 2
+
+  let color = COLOR_GREY
+  const fromNode = chart.nodes[link.from.nodeId]
+
+  if (fromNode) {
+    if (fromNode.type === 'output-only' || (fromNode.properties && fromNode.properties.status === 'Finished')) {
+      color = COLOR_SUCCESS
+    }
+  }
+
+  const data = { ...props, color }
+
   return (
     <>
-      <LinkDefault {...props} />
+      <LinkDefault {...data} />
       <Label style={{ left: centerX, top: centerY }}>
         {props.link.properties && props.link.properties.label && (
           <LabelContent>{props.link.properties && props.link.properties.label}</LabelContent>
@@ -66,6 +78,6 @@ export const LinkCustom = (props: ILinkDefaultProps, callbacks: ILinkCustomCallb
   )
 }
 
-export const LinkCustomWrapper = (props: ILinkDefaultProps, callbacks: ILinkCustomCallbacks) => {
-  return LinkCustom(props, callbacks)
+export const LinkCustomWrapper = (props: ILinkDefaultProps, chart: ILinkChart, callbacks: ILinkCustomCallbacks) => {
+  return LinkCustom(props, chart, callbacks)
 }

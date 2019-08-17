@@ -58,6 +58,11 @@ var FlowChartWithStateAdvanced = /** @class */ (function (_super) {
         else if (this.props.tasks !== prevProps.tasks) {
             this.handleCallback('refreshState');
         }
+        if (this.props.nodes !== prevProps.nodes) {
+            this.setState({
+                nodes: this.props.nodes,
+            });
+        }
     };
     FlowChartWithStateAdvanced.prototype.handleCallback = function (funcName, args) {
         var handleCallback = this.props.handleCallback;
@@ -150,7 +155,7 @@ var FlowChartWithStateAdvanced = /** @class */ (function (_super) {
                             },
                         },
                     });
-                }, Link: function (props) { return __1.LinkCustomWrapper(props, {
+                }, Link: function (props) { return __1.LinkCustomWrapper(__assign({}, props), { nodes: _this.state.nodes }, {
                     onDelete: function (link) {
                         if (link.from.nodeId && link.to.nodeId) {
                             var fromNode = _this.state.nodes[link.from.nodeId];

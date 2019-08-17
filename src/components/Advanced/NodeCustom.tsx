@@ -1,7 +1,7 @@
 import * as React from 'react'
 import styled from 'styled-components'
 import { INodeDefaultProps } from '../Node'
-import { COLOR_INPUT, COLOR_OUTPUT } from '../../types/advanced'
+import { COLOR_INPUT, COLOR_OUTPUT, COLOR_OUTPUT_LIGHT, COLOR_SUCCESS_LIGHT } from '../../types/advanced'
 
 const InputNode = styled.div`
   position: absolute;
@@ -29,6 +29,10 @@ const TaskNode = styled.div`
   align-items: center;
   background: #ffffff;
   color: black;
+  border: solid ${COLOR_OUTPUT_LIGHT} 2px;
+  &.finished{
+    border-color: ${COLOR_SUCCESS_LIGHT}
+  }
 `
 
 /**
@@ -50,8 +54,10 @@ export const NodeCustom = React.forwardRef(({ node, children, ...otherProps }: I
       </OutputNode>
     )
   } else {
+    const { task = {} } = node.properties
+    const { status = 'Pending' } = task
     return (
-      <TaskNode {...otherProps} className="flow-chart-task-node">
+      <TaskNode {...otherProps} className={`flow-chart-task-node ${status.toLowerCase()}`}>
         {children}
       </TaskNode>
     )

@@ -19,8 +19,8 @@ var __extends = (this && this.__extends) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var styled_components_1 = require("styled-components");
-var components_1 = require("../../stories/components");
 var __1 = require("../");
+var components_1 = require("../../stories/components");
 var calculate_1 = require("../components/Advanced/utils/calculate");
 var generateRelations_1 = require("../components/Advanced/utils/generateRelations");
 var getTaskRelations_1 = require("../components/Advanced/utils/getTaskRelations");
@@ -36,6 +36,7 @@ var TasksFlowChart = /** @class */ (function (_super) {
             added: [],
             refreshCode: 1,
             distances: {},
+            nodes: {},
             chartRelations: generateRelations_1.generateRelations(_this.props.tasks),
         };
         _this.getCurrentState = _this.getCurrentState.bind(_this);
@@ -81,12 +82,13 @@ var TasksFlowChart = /** @class */ (function (_super) {
     TasksFlowChart.prototype.recalculateDistances = function (state) {
         var _a = this.state, chartRelations = _a.chartRelations, tasks = _a.tasks;
         var onChange = this.props.onChange;
-        var _b = calculate_1.calculatePaths(tasks, state), distances = _b.distances, errors = _b.errors;
+        var _b = calculate_1.calculatePaths(tasks, state), distances = _b.distances, errors = _b.errors, nodesMap = _b.nodesMap;
         var fixedTasks = getTaskRelations_1.getTaskRelations(tasks, chartRelations);
         this.setState({
             distances: distances,
             errors: errors,
             tasks: fixedTasks,
+            nodes: nodesMap,
         }, function () {
             onChange && onChange({
                 chartRelations: chartRelations,
@@ -111,7 +113,7 @@ var TasksFlowChart = /** @class */ (function (_super) {
         var _this = this;
         return (React.createElement(components_1.Page, null,
             React.createElement(components_1.Content, null,
-                React.createElement(__1.FlowChartWithStateAdvanced, { startContent: this.props.startContent, endContent: this.props.endContent, taskContent: this.props.taskContent, refreshCode: this.state.refreshCode, tasks: this.state.tasks, distances: this.state.distances, initialValue: this.state.chartRelations, handleCreateRelation: this.props.handleCreateRelation, handleDeleteRelation: this.props.handleDeleteRelation, handleDeleteTaskRelations: this.props.handleDeleteTaskRelations, handleCallback: function (name, args, state) {
+                React.createElement(__1.FlowChartWithStateAdvanced, { startContent: this.props.startContent, endContent: this.props.endContent, taskContent: this.props.taskContent, refreshCode: this.state.refreshCode, tasks: this.state.tasks, nodes: this.state.nodes, distances: this.state.distances, initialValue: this.state.chartRelations, handleCreateRelation: this.props.handleCreateRelation, handleDeleteRelation: this.props.handleDeleteRelation, handleDeleteTaskRelations: this.props.handleDeleteTaskRelations, handleCallback: function (name, args, state) {
                         if (state) {
                             if (args) {
                                 switch (name) {

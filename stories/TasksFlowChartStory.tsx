@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { TasksFlowChart } from '../src/container/TasksFlowChart'
+import { COLOR_ERROR, COLOR_SUCCESS } from '../src/types'
 
 export class TasksFlowChartStory extends React.Component<{}, {}> {
 
@@ -20,36 +21,44 @@ export class TasksFlowChartStory extends React.Component<{}, {}> {
       title: 'Task A',
       id: 'taskA',
       points: 20,
+      status: 'Finished',
       dependencies: [],
     }, {
       title: 'Task B',
       id: 'taskB',
       points: 30,
+      status: 'Finished',
       dependencies: ['taskA'],
     }, {
       title: 'Task C',
       id: 'taskC',
       points: 40,
-      dependencies: ['taskA', 'taskJ'],
+      status: 'Finished',
+      dependencies: ['taskA'],
     }, {
       title: 'Task D',
       id: 'taskD',
       points: 40,
+      status: 'Finished',
       dependencies: [],
     }, {
       title: 'Task E',
       id: 'taskE',
       points: 40,
+      status: 'Finished',
+      // dependencies: ['taskC', 'taskJ'],
       dependencies: ['taskC'],
     }, {
       title: 'Task F',
       id: 'taskF',
       points: 40,
+      status: 'Finished',
       dependencies: ['taskD'],
     }, {
       title: 'Task G',
       id: 'taskG',
       points: 40,
+      status: 'Finished',
       dependencies: ['taskF'],
     }, {
       title: 'Task H',
@@ -99,7 +108,9 @@ export class TasksFlowChartStory extends React.Component<{}, {}> {
           endContent={(distance) => (
             <p>PROJECT END ({distance})</p>
           )}
-          taskContent={(task) => (<div>
+          taskContent={(task) => (<div
+            style={{ color: task && task.status === 'Finished' ? COLOR_SUCCESS : COLOR_ERROR }}
+          >
             <p>{task.id}</p>
             <i
               style={{ width: 15, position: 'absolute', right: 25, top: 5 }}

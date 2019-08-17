@@ -17,17 +17,25 @@ var __assign = (this && this.__assign) || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var styled_components_1 = require("styled-components");
-var Link_1 = require("../Link");
 var advanced_1 = require("../../types/advanced");
+var Link_1 = require("../Link");
 var Label = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: absolute;\n"], ["\n  position: absolute;\n"])));
 var Button = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  position: absolute;\n  top: 0;\n  right: 0;\n  padding: 0;\n  height: 20px;\n  width: 20px;\n  transform: translate(50%, -50%);\n  background: ", ";\n  color: white;\n  border-radius: 50%;\n  transition: 0.3s ease all;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 16px;\n  cursor: pointer;\n  font-weight: bold;\n  &:hover {\n    box-shadow: 0 10px 20px rgba(0,0,0,.1);\n  }\n"], ["\n  position: absolute;\n  top: 0;\n  right: 0;\n  padding: 0;\n  height: 20px;\n  width: 20px;\n  transform: translate(50%, -50%);\n  background: ", ";\n  color: white;\n  border-radius: 50%;\n  transition: 0.3s ease all;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 16px;\n  cursor: pointer;\n  font-weight: bold;\n  &:hover {\n    box-shadow: 0 10px 20px rgba(0,0,0,.1);\n  }\n"])), advanced_1.COLOR_LINK_CLOSE);
 var LabelContent = styled_components_1.default.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  padding: 5px 10px;\n  background: ", ";\n  color: white;\n  border-radius: 5px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 10px;\n  cursor: pointer;\n"], ["\n  padding: 5px 10px;\n  background: ", ";\n  color: white;\n  border-radius: 5px;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n  font-size: 10px;\n  cursor: pointer;\n"])), advanced_1.COLOR_INPUT);
-exports.LinkCustom = function (props, callbacks) {
+exports.LinkCustom = function (props, chart, callbacks) {
     var startPos = props.startPos, endPos = props.endPos, link = props.link;
     var centerX = startPos.x + (endPos.x - startPos.x) / 2;
     var centerY = startPos.y + (endPos.y - startPos.y) / 2;
+    var color = advanced_1.COLOR_GREY;
+    var fromNode = chart.nodes[link.from.nodeId];
+    if (fromNode) {
+        if (fromNode.type === 'output-only' || (fromNode.properties && fromNode.properties.status === 'Finished')) {
+            color = advanced_1.COLOR_SUCCESS;
+        }
+    }
+    var data = __assign({}, props, { color: color });
     return (React.createElement(React.Fragment, null,
-        React.createElement(Link_1.LinkDefault, __assign({}, props)),
+        React.createElement(Link_1.LinkDefault, __assign({}, data)),
         React.createElement(Label, { style: { left: centerX, top: centerY } },
             props.link.properties && props.link.properties.label && (React.createElement(LabelContent, null, props.link.properties && props.link.properties.label)),
             React.createElement(Button, { onClick: function (e) {
@@ -35,8 +43,8 @@ exports.LinkCustom = function (props, callbacks) {
                     e.stopPropagation();
                 } }, "x"))));
 };
-exports.LinkCustomWrapper = function (props, callbacks) {
-    return exports.LinkCustom(props, callbacks);
+exports.LinkCustomWrapper = function (props, chart, callbacks) {
+    return exports.LinkCustom(props, chart, callbacks);
 };
 var templateObject_1, templateObject_2, templateObject_3;
 //# sourceMappingURL=LinkCustom.js.map

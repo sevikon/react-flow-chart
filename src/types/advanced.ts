@@ -6,6 +6,7 @@ export interface ITaskType {
   title: string,
   points?: number,
   distance?: number,
+  status?: string,
   dependencies?: string[]
 }
 
@@ -14,6 +15,10 @@ export interface ITaskGroupType extends Array<ITaskType> {
 
 export interface IChartLinksArray {
   [id: string]: ILink,
+}
+
+export interface ILinkChart {
+  nodes: IChartNodesArray
 }
 
 export interface IChartNodesArray {
@@ -99,6 +104,7 @@ export interface IFlowChartWithStatePropsAdvanced {
   startContent?: () => void,
   endContent?: (distance: number) => void,
   tasks: ITaskGroupType,
+  nodes: IChartNodesArray,
   refreshCode: number,
 }
 
@@ -133,9 +139,16 @@ export interface ITasksFlowChartState {
   tasks: ITaskGroupType,
   distances: object,
   added: IAddedTasksArray,
-  refreshCode: number
+  refreshCode: number,
+  nodes: IChartNodesArray
 }
 
 export const COLOR_INPUT = '#F9A825'
 export const COLOR_OUTPUT = '#3F51B5'
 export const COLOR_LINK_CLOSE = '#EC407A'
+export const COLOR_SUCCESS = '#009688'
+export const COLOR_ERROR = COLOR_LINK_CLOSE
+export const COLOR_GREY = '#8e8e8e'
+
+export const COLOR_SUCCESS_LIGHT = 'rgba(0,150,136,0.4)'
+export const COLOR_OUTPUT_LIGHT = 'rgba(63,81,181,0.4)'

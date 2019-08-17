@@ -81,10 +81,10 @@ export function generateRelations (tasks: ITaskGroupType): IChart {
 
   const calculateBlockHeight = (taskId: string) => {
     const node = tasksMap[taskId]
-    if (!node.visited) {
+    if (!node.visited || node.visited < 30) {
       let blockHeight = node.children.length
       if (blockHeight < 1) {
-        blockHeight = blockHeight < 1 ? 1 : blockHeight
+        blockHeight = 1
       } else {
         blockHeight = 0
         node.children.map((taskChildId: string) => {
@@ -93,10 +93,12 @@ export function generateRelations (tasks: ITaskGroupType): IChart {
         })
       }
       node.blockHeight = blockHeight
-      node.visited = true
+      node.visited += 1
       node.parents.map((taskParentId: string) => {
         calculateBlockHeight(taskParentId)
       })
+    } else if (node.visited >= 30) {
+      node.blockHeight = 3
     }
   }
 
@@ -108,6 +110,8 @@ export function generateRelations (tasks: ITaskGroupType): IChart {
       }
     }
   }
+
+  console.log(tasksMap)
 
   const getLink = (id: string, fromId: string, toId: string): ILink | null => {
     if (!nodes[fromId] || !nodes[toId]) {

@@ -1,4 +1,4 @@
-import { IChart, ILink, INode } from '../../../types'
+import { IChart, IChartNodesArray, ILink, INode } from '../../../types'
 import { IRelationErrorArray, ITaskGroupType } from '../../../types/advanced'
 
 export const forEach = (el: object, callback: (val: any) => void) => {
@@ -12,13 +12,13 @@ export const forEach = (el: object, callback: (val: any) => void) => {
 export const calculatePaths = (tasks: ITaskGroupType, state?: IChart) => {
   const distances = {}
   const errors: IRelationErrorArray = []
+  const nodesMap: IChartNodesArray = {}
+
   if (state) {
     const links: ILink[] = []
     forEach(state.links, (val) => {
       links.push(val)
     })
-    const nodesMap = {}
-
     forEach(state.nodes, (n: INode) => {
       const { properties = {} } = n
       n.properties = { ...properties, task: tasks.filter((t) => (t.id === properties.taskId))[0], ascendants: [] }
@@ -31,13 +31,18 @@ export const calculatePaths = (tasks: ITaskGroupType, state?: IChart) => {
         const { task = {} } = properties
         let distance = task.points ? parseInt(task.points, 10) : 0
         const ascendants = currentNode.properties.ascendants
+        let status = task.status || 'Pending'
         ascendants.map((nodeId: string) => {
           const t = nodesMap[nodeId].properties.task
           const d = t && t.points ? parseInt(t.points, 10) : 0
           distance += d
+          if (t && t.status !== 'Finished') {
+            status = 'Pending'
+          }
         })
+        properties.status = status
         distances[currentNode.id] = distance
-        nodesMap[currentNode.id] = currentNode
+        nodesMap[currentNode.id] = { ...currentNode, properties }
         const nextNodes = links.filter((l) => (l.from.nodeId === currentNode.id)).map((l) => l.to.nodeId)
         nextNodes.map((nodeId: string) => (
           calculateNodePath(nodesMap[nodeId])),
@@ -99,5 +104,5 @@ export const calculatePaths = (tasks: ITaskGroupType, state?: IChart) => {
     }
 
   }
-  return { distances, errors }
+  return { distances, errors, nodesMap }
 }

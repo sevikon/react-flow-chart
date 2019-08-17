@@ -29,6 +29,11 @@ export class FlowChartWithStateAdvanced extends React.Component<IFlowChartWithSt
     } else if (this.props.tasks !== prevProps.tasks) {
       this.handleCallback('refreshState')
     }
+    if (this.props.nodes !== prevProps.nodes) {
+      this.setState({
+        nodes: this.props.nodes,
+      })
+    }
   }
 
   public handleCallback (funcName: string, args?: ICallbackArgsType) {
@@ -131,8 +136,8 @@ export class FlowChartWithStateAdvanced extends React.Component<IFlowChartWithSt
               },
             },
           }),
-          Link: (props) => LinkCustomWrapper(props, {
-            onDelete: (link) => {
+          Link: (props) => LinkCustomWrapper({ ...props }, { nodes: this.state.nodes }, {
+            onDelete: (link: ILink) => {
               if (link.from.nodeId && link.to.nodeId) {
                 const fromNode = this.state.nodes[link.from.nodeId]
                 const toNode = this.state.nodes[link.to.nodeId]

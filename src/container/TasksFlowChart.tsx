@@ -1,12 +1,12 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { Content, Page, Sidebar, SidebarItem } from '../../stories/components'
 import { FlowChartWithStateAdvanced } from '../'
-import { ITasksFlowChart, ITasksFlowChartState, ITaskType, IUpdateTask } from '../types/advanced'
+import { Content, Page, Sidebar, SidebarItem } from '../../stories/components'
 import { calculatePaths, forEach } from '../components/Advanced/utils/calculate'
 import { generateRelations } from '../components/Advanced/utils/generateRelations'
 import { getTaskRelations } from '../components/Advanced/utils/getTaskRelations'
 import { IChart, INode } from '../types'
+import { ITasksFlowChart, ITasksFlowChartState, ITaskType, IUpdateTask } from '../types/advanced'
 
 const ErrorDiv = styled.div`
 padding: 10px;
@@ -26,6 +26,7 @@ export class TasksFlowChart extends React.Component<ITasksFlowChart, ITasksFlowC
       added: [],
       refreshCode: 1,
       distances: {},
+      nodes: {},
       chartRelations: generateRelations(this.props.tasks),
     }
     this.getCurrentState = this.getCurrentState.bind(this)
@@ -81,13 +82,14 @@ export class TasksFlowChart extends React.Component<ITasksFlowChart, ITasksFlowC
 
     const { chartRelations, tasks } = this.state
     const { onChange } = this.props
-    const { distances, errors } = calculatePaths(tasks, state)
+    const { distances, errors, nodesMap } = calculatePaths(tasks, state)
     const fixedTasks = getTaskRelations(tasks, chartRelations)
 
     this.setState({
       distances,
       errors,
       tasks: fixedTasks,
+      nodes: nodesMap,
     }, () => {
       onChange && onChange({
         chartRelations,
@@ -121,6 +123,7 @@ export class TasksFlowChart extends React.Component<ITasksFlowChart, ITasksFlowC
             taskContent={this.props.taskContent}
             refreshCode={this.state.refreshCode}
             tasks={this.state.tasks}
+            nodes={this.state.nodes}
             distances={this.state.distances}
             initialValue={this.state.chartRelations}
             handleCreateRelation={this.props.handleCreateRelation}

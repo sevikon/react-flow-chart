@@ -31,13 +31,13 @@ var styled_components_1 = require("styled-components");
 var advanced_1 = require("../../types/advanced");
 var InputNode = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\n  position: absolute;\n  padding: 30px;\n  background: ", ";\n  color: white;\n  border-radius: 10px;\n"], ["\n  position: absolute;\n  padding: 30px;\n  background: ", ";\n  color: white;\n  border-radius: 10px;\n"])), advanced_1.COLOR_OUTPUT);
 var OutputNode = styled_components_1.default.div(templateObject_2 || (templateObject_2 = __makeTemplateObject(["\n  position: absolute;\n  padding: 30px;\n  background: ", ";\n  color: white;\n  border-radius: 10px;\n"], ["\n  position: absolute;\n  padding: 30px;\n  background: ", ";\n  color: white;\n  border-radius: 10px;\n"])), advanced_1.COLOR_INPUT);
-var TaskNode = styled_components_1.default.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  position: absolute;\n  width: 240px;\n  height: 100px;\n  padding: 30px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background: #ffffff;\n  color: black;\n"], ["\n  position: absolute;\n  width: 240px;\n  height: 100px;\n  padding: 30px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background: #ffffff;\n  color: black;\n"
+var TaskNode = styled_components_1.default.div(templateObject_3 || (templateObject_3 = __makeTemplateObject(["\n  position: absolute;\n  width: 240px;\n  height: 100px;\n  padding: 30px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background: #ffffff;\n  color: black;\n  border: solid ", " 2px;\n  &.finished{\n    border-color: ", "\n  }\n"], ["\n  position: absolute;\n  width: 240px;\n  height: 100px;\n  padding: 30px;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  background: #ffffff;\n  color: black;\n  border: solid ", " 2px;\n  &.finished{\n    border-color: ", "\n  }\n"
     /**
      * Create the custom component,
      * Make sure it has the same prop signature
      * You'll need to add {...otherProps} so the event listeners are added to your component
      */
-])));
+])), advanced_1.COLOR_OUTPUT_LIGHT, advanced_1.COLOR_SUCCESS_LIGHT);
 /**
  * Create the custom component,
  * Make sure it has the same prop signature
@@ -52,7 +52,9 @@ exports.NodeCustom = React.forwardRef(function (_a) {
         return (React.createElement(OutputNode, __assign({}, otherProps, { className: "flow-chart-end-node" }), children));
     }
     else {
-        return (React.createElement(TaskNode, __assign({}, otherProps, { className: "flow-chart-task-node" }), children));
+        var _b = node.properties.task, task = _b === void 0 ? {} : _b;
+        var _c = task.status, status_1 = _c === void 0 ? 'Pending' : _c;
+        return (React.createElement(TaskNode, __assign({}, otherProps, { className: "flow-chart-task-node " + status_1.toLowerCase() }), children));
     }
 });
 var templateObject_1, templateObject_2, templateObject_3;
