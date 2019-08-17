@@ -26,6 +26,7 @@ var __assign = (this && this.__assign) || function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = require("react");
 var __1 = require("../");
+var CanvasOuterCustom_1 = require("../components/Advanced/CanvasOuterCustom");
 var index_1 = require("../index");
 var actions = require("./actions");
 var mapValues_1 = require("./utils/mapValues");
@@ -46,6 +47,7 @@ var FlowChartWithStateAdvanced = /** @class */ (function (_super) {
             };
         });
         _this.state = props.initialValue;
+        _this.canvas = props.backgroundImage ? CanvasOuterCustom_1.CanvasOuterCustomImageFunc(props.backgroundImage) : __1.CanvasOuterDefault;
         return _this;
     }
     FlowChartWithStateAdvanced.prototype.componentDidMount = function () {
@@ -127,7 +129,7 @@ var FlowChartWithStateAdvanced = /** @class */ (function (_super) {
                 }
                 _this.setState((_a = _this.stateActions).onCanvasDrop.apply(_a, args), function () { return _this.handleCallback('onCanvasDrop', args); });
             } });
-        return (React.createElement(index_1.FlowChart, { chart: this.state, callbacks: callbacks, Components: __assign({}, Components, { Node: __1.NodeCustom, Port: __1.PortCustom, NodeInner: function (_a) {
+        return (React.createElement(index_1.FlowChart, { chart: this.state, callbacks: callbacks, Components: __assign({}, Components, { CanvasOuter: this.canvas, Node: __1.NodeCustom, Port: __1.PortCustom, NodeInner: function (_a) {
                     var node = _a.node;
                     return __1.NodeInnerDefaultWrapper({
                         node: node,

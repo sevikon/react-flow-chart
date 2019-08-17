@@ -1,21 +1,10 @@
 import * as React from 'react'
-import { TasksFlowChart } from '../src/container/TasksFlowChart'
+import { TasksFlowChart } from '../src/container'
 import { COLOR_ERROR, COLOR_SUCCESS } from '../src/types'
 
 export class TasksFlowChartStory extends React.Component<{}, {}> {
 
   public render () {
-
-    // const startTasks = [{
-    //   title: 'Task X',
-    //   id: 'taskX',
-    //   points: 40,
-    //   dependencies: [],
-    // }, {
-    //   title: 'Task Y',
-    //   id: 'taskY',
-    //   dependencies: [],
-    // }]
 
     const startTasks = [{
       title: 'Task A',
@@ -89,6 +78,7 @@ export class TasksFlowChartStory extends React.Component<{}, {}> {
     return (
       <div>
         <TasksFlowChart
+          backgroundImage={'http://localhost:3000/uploads/stock/khPiBGp_1545152212lar5rDPar6.jpg'}
           tasks={startTasks}
           // handleCreateRelation={({ from, to }) => {
           //   console.log(from, to)

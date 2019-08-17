@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { IChart } from '../types';
-import { ITasksFlowChart, ITasksFlowChartState, IUpdateTask } from '../types/advanced';
+import { IChart, ITasksFlowChart, ITasksFlowChartState, IUpdateTask } from '../types';
 export declare class TasksFlowChart extends React.Component<ITasksFlowChart, ITasksFlowChartState> {
     constructor(props: ITasksFlowChart);
     componentDidUpdate(prevProps: Readonly<ITasksFlowChart>, prevState: Readonly<ITasksFlowChartState>, snapshot?: any): void;

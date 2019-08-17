@@ -7,6 +7,7 @@ import { IChart } from '../index';
 export declare class FlowChartWithStateAdvanced extends React.Component<IFlowChartWithStatePropsAdvanced, IChart> {
     state: IChart;
     private stateActions;
+    private canvas?;
     constructor(props: IFlowChartWithStatePropsAdvanced);
     componentDidMount(): void;
     componentDidUpdate(prevProps: Readonly<IFlowChartWithStatePropsAdvanced>, prevState: Readonly<IChart>, snapshot?: any): void;

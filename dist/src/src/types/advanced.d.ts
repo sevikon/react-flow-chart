@@ -71,6 +71,7 @@ interface ITaskRelationType {
     to: ITaskType;
 }
 export interface IFlowChartWithStatePropsAdvanced {
+    backgroundImage?: string;
     distances: object;
     Components?: IFlowChartComponents;
     handleCallback?: IHandleCallbackFunc;
@@ -93,6 +94,7 @@ export interface IUpdateTask {
     value: string;
 }
 export interface ITasksFlowChart {
+    backgroundImage?: string;
     handleCreateRelation?: IHandleRelationFunc;
     handleDeleteRelation?: IHandleRelationFunc;
     handleDeleteTaskRelations?: IHandleTaskFunc;
@@ -123,7 +125,7 @@ export declare const COLOR_OUTPUT = "#3F51B5";
 export declare const COLOR_LINK_CLOSE = "#EC407A";
 export declare const COLOR_SUCCESS = "#009688";
 export declare const COLOR_ERROR = "#EC407A";
-export declare const COLOR_GREY = "#8e8e8e";
+export declare const COLOR_DEFAULT_LINK = "#FFF";
 export declare const COLOR_SUCCESS_LIGHT = "rgba(0,150,136,0.4)";
 export declare const COLOR_OUTPUT_LIGHT = "rgba(63,81,181,0.4)";
 export {};

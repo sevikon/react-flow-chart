@@ -1,5 +1,4 @@
-import { IChart, ILink, INode } from '../../../types'
-import { IChartLinksArray, IChartNodesArray, ITaskGroupType, ITaskType } from '../../../types/advanced'
+import { IChart, IChartLinksArray, IChartNodesArray, ILink, INode, ITaskGroupType, ITaskType } from '../../../types'
 
 function getStart (id: string, x: number, y: number): INode {
   return { id, type: 'output-only', position: { x, y }, ports: { port2: { id: 'port2', type: 'right', position: { x: 133, y: 65 } } } }
@@ -39,7 +38,7 @@ export function generateRelations (tasks: ITaskGroupType): IChart {
   const start = {
     x: 20,
     y: 20,
-    w: 130,
+    w: 210,
     h: 130,
   }
 
@@ -143,7 +142,7 @@ export function generateRelations (tasks: ITaskGroupType): IChart {
   for (const property in tasksMap) {
     if (tasksMap.hasOwnProperty(property)) {
       const node = tasksMap[property]
-      if (node.parents.length === 0) {
+      if (node.parents.length === 0 && node.children.length > 0) {
         generateNode(property, 0, row)
         row = row + node.blockHeight
       }
@@ -151,7 +150,7 @@ export function generateRelations (tasks: ITaskGroupType): IChart {
   }
 
   nodes[nodeStartId] = getStart(nodeStartId, start.x, start.y)
-  nodes[nodeEndId] = getEnd(nodeEndId, start.x + start.w + 2 * margin.x + (maxColumn + 1) * (margin.x + block.w), start.y)
+  nodes[nodeEndId] = getEnd(nodeEndId, start.x + start.w + margin.x + (maxColumn + 1) * (margin.x + block.w), start.y)
 
   for (const property in tasksMap) {
     if (tasksMap.hasOwnProperty(property)) {

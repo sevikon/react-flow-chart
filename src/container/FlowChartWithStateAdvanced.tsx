@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { ICallbackArgsType, IFlowChartWithStatePropsAdvanced, LinkCustomWrapper, NodeCustom, NodeInnerDefaultWrapper, PortCustom } from '../'
+import { CanvasOuterDefault, ICallbackArgsType, ICanvasOuterDefaultProps, IFlowChartWithStatePropsAdvanced, LinkCustomWrapper, NodeCustom, NodeInnerDefaultWrapper, PortCustom } from '../'
+import { CanvasOuterCustomImageFunc } from '../components/Advanced/CanvasOuterCustom'
 import { FlowChart, IChart, ILink } from '../index'
 import * as actions from './actions'
 import mapValues from './utils/mapValues'
@@ -13,10 +14,12 @@ export class FlowChartWithStateAdvanced extends React.Component<IFlowChartWithSt
     (...args: any) => {
       this.setState(func(...args))
     })
+  private canvas?: React.FunctionComponent<ICanvasOuterDefaultProps>
 
   constructor (props: IFlowChartWithStatePropsAdvanced) {
     super(props)
     this.state = props.initialValue
+    this.canvas = props.backgroundImage ? CanvasOuterCustomImageFunc(props.backgroundImage) : CanvasOuterDefault
   }
 
   public componentDidMount (): void {
@@ -110,6 +113,7 @@ export class FlowChartWithStateAdvanced extends React.Component<IFlowChartWithSt
         callbacks={callbacks}
         Components={{
           ...Components,
+          CanvasOuter: this.canvas,
           Node: NodeCustom,
           Port: PortCustom,
           NodeInner: ({ node }) => NodeInnerDefaultWrapper({

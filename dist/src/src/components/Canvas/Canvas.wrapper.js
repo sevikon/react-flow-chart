@@ -66,6 +66,7 @@ var CanvasWrapper = /** @class */ (function (_super) {
         var _a = this.props, ComponentInner = _a.ComponentInner, ComponentOuter = _a.ComponentOuter, position = _a.position, onDragCanvas = _a.onDragCanvas, children = _a.children, onCanvasClick = _a.onCanvasClick, onDeleteKey = _a.onDeleteKey, onCanvasDrop = _a.onCanvasDrop;
         return (React.createElement(CanvasContext_1.default.Provider, { value: { offsetX: this.state.offsetX, offsetY: this.state.offsetY } },
             React.createElement(ComponentOuter, { ref: this.ref },
+                React.createElement(__1.CanvasShadow, { className: "shadow" }),
                 React.createElement(react_draggable_1.default, { axis: "both", position: position, grid: [1, 1], onDrag: function (e, dragData) { return onDragCanvas(e, dragData); } },
                     React.createElement(ComponentInner, { children: children, onClick: onCanvasClick, tabIndex: 0, onKeyDown: function (e) {
                             if (e.keyCode === 46) {

@@ -1,19 +1,19 @@
 import * as React from 'react'
 import styled from 'styled-components'
+import { COLOR_INPUT, COLOR_OUTPUT, COLOR_OUTPUT_LIGHT, COLOR_SUCCESS_LIGHT } from '../../types'
 import { INodeDefaultProps } from '../Node'
-import { COLOR_INPUT, COLOR_OUTPUT, COLOR_OUTPUT_LIGHT, COLOR_SUCCESS_LIGHT } from '../../types/advanced'
 
 const InputNode = styled.div`
   position: absolute;
-  padding: 30px;
+  padding: 10px 30px;
   background: ${COLOR_OUTPUT};
   color: white;
   border-radius: 10px;
 `
 
 const OutputNode = styled.div`
+  padding: 10px 30px;
   position: absolute;
-  padding: 30px;
   background: ${COLOR_INPUT};
   color: white;
   border-radius: 10px;

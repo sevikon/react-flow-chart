@@ -1,6 +1,6 @@
 import * as React from 'react'
 import Draggable from 'react-draggable'
-import { IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, REACT_FLOW_CHART } from '../../'
+import { CanvasShadow, IOnCanvasClick, IOnCanvasDrop, IOnDeleteKey, IOnDragCanvas, REACT_FLOW_CHART } from '../../'
 import CanvasContext from './CanvasContext'
 import { ICanvasInnerDefaultProps } from './CanvasInner.default'
 import { ICanvasOuterDefaultProps } from './CanvasOuter.default'
@@ -73,6 +73,7 @@ export class CanvasWrapper extends React.Component<ICanvasWrapperProps, IState> 
     return (
       <CanvasContext.Provider value={{ offsetX: this.state.offsetX, offsetY: this.state.offsetY }}>
         <ComponentOuter ref={this.ref}>
+          <CanvasShadow className="shadow"/>
           <Draggable
             axis="both"
             position={position}

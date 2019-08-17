@@ -21,9 +21,7 @@ var React = require("react");
 var styled_components_1 = require("styled-components");
 var __1 = require("../");
 var components_1 = require("../../stories/components");
-var calculate_1 = require("../components/Advanced/utils/calculate");
-var generateRelations_1 = require("../components/Advanced/utils/generateRelations");
-var getTaskRelations_1 = require("../components/Advanced/utils/getTaskRelations");
+var utils_1 = require("../components/Advanced/utils");
 var ErrorDiv = styled_components_1.default.div(templateObject_1 || (templateObject_1 = __makeTemplateObject(["\npadding: 10px;\nmargin-bottom: 10px;\ncolor: #FFFFFF;\nbackground-color: #ec407a;\n"], ["\npadding: 10px;\nmargin-bottom: 10px;\ncolor: #FFFFFF;\nbackground-color: #ec407a;\n"])));
 var TasksFlowChart = /** @class */ (function (_super) {
     __extends(TasksFlowChart, _super);
@@ -37,7 +35,7 @@ var TasksFlowChart = /** @class */ (function (_super) {
             refreshCode: 1,
             distances: {},
             nodes: {},
-            chartRelations: generateRelations_1.generateRelations(_this.props.tasks),
+            chartRelations: utils_1.generateRelations(_this.props.tasks),
         };
         _this.getCurrentState = _this.getCurrentState.bind(_this);
         _this.recalculateDistances = _this.recalculateDistances.bind(_this);
@@ -82,8 +80,8 @@ var TasksFlowChart = /** @class */ (function (_super) {
     TasksFlowChart.prototype.recalculateDistances = function (state) {
         var _a = this.state, chartRelations = _a.chartRelations, tasks = _a.tasks;
         var onChange = this.props.onChange;
-        var _b = calculate_1.calculatePaths(tasks, state), distances = _b.distances, errors = _b.errors, nodesMap = _b.nodesMap;
-        var fixedTasks = getTaskRelations_1.getTaskRelations(tasks, chartRelations);
+        var _b = utils_1.calculatePaths(tasks, state), distances = _b.distances, errors = _b.errors, nodesMap = _b.nodesMap;
+        var fixedTasks = utils_1.getTaskRelations(tasks, chartRelations);
         this.setState({
             distances: distances,
             errors: errors,
@@ -99,7 +97,7 @@ var TasksFlowChart = /** @class */ (function (_super) {
     };
     TasksFlowChart.prototype.refreshTasks = function (state, callback) {
         var added = this.state.added;
-        calculate_1.forEach(state.nodes, function (n) {
+        utils_1.forEach(state.nodes, function (n) {
             var _a = n.properties, properties = _a === void 0 ? {} : _a;
             if (properties.taskId) {
                 added.push(properties.taskId);
@@ -113,7 +111,7 @@ var TasksFlowChart = /** @class */ (function (_super) {
         var _this = this;
         return (React.createElement(components_1.Page, null,
             React.createElement(components_1.Content, null,
-                React.createElement(__1.FlowChartWithStateAdvanced, { startContent: this.props.startContent, endContent: this.props.endContent, taskContent: this.props.taskContent, refreshCode: this.state.refreshCode, tasks: this.state.tasks, nodes: this.state.nodes, distances: this.state.distances, initialValue: this.state.chartRelations, handleCreateRelation: this.props.handleCreateRelation, handleDeleteRelation: this.props.handleDeleteRelation, handleDeleteTaskRelations: this.props.handleDeleteTaskRelations, handleCallback: function (name, args, state) {
+                React.createElement(__1.FlowChartWithStateAdvanced, { backgroundImage: this.props.backgroundImage, startContent: this.props.startContent, endContent: this.props.endContent, taskContent: this.props.taskContent, refreshCode: this.state.refreshCode, tasks: this.state.tasks, nodes: this.state.nodes, distances: this.state.distances, initialValue: this.state.chartRelations, handleCreateRelation: this.props.handleCreateRelation, handleDeleteRelation: this.props.handleDeleteRelation, handleDeleteTaskRelations: this.props.handleDeleteTaskRelations, handleCallback: function (name, args, state) {
                         if (state) {
                             if (args) {
                                 switch (name) {
@@ -166,7 +164,7 @@ var TasksFlowChart = /** @class */ (function (_super) {
                             }
                         }
                     } })),
-            React.createElement(components_1.Sidebar, null,
+            React.createElement(components_1.Sidebar, { className: "sidebar" },
                 this.state.errors.map(function (err) { return (React.createElement(ErrorDiv, null,
                     "ERROR: ",
                     err.type,

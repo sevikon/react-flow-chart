@@ -67,7 +67,7 @@ var SidebarItem = /** @class */ (function (_super) {
     SidebarItem.prototype.render = function () {
         var _this = this;
         var _a = this.props, type = _a.type, ports = _a.ports, properties = _a.properties;
-        return (React.createElement("div", { ref: this.ref },
+        return (React.createElement("div", { ref: this.ref, className: "sidebar-item" },
             React.createElement(Outer, { draggable: true, onDragStart: function (event) {
                     var el = _this.ref.current;
                     if (el) {

@@ -60,7 +60,7 @@ export class SidebarItem extends React.Component<ISidebarItemProps, IState> {
     const { type, ports, properties }: ISidebarItemProps = this.props
 
     return (
-      <div ref={this.ref}>
+      <div ref={this.ref} className="sidebar-item">
         <Outer
           draggable={true}
           onDragStart={(event) => {

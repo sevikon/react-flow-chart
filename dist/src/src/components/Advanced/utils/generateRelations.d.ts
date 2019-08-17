@@ -1,3 +1,2 @@
-import { IChart } from '../../../types';
-import { ITaskGroupType } from '../../../types/advanced';
+import { IChart, ITaskGroupType } from '../../../types';
 export declare function generateRelations(tasks: ITaskGroupType): IChart;

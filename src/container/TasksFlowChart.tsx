@@ -2,11 +2,8 @@ import * as React from 'react'
 import styled from 'styled-components'
 import { FlowChartWithStateAdvanced } from '../'
 import { Content, Page, Sidebar, SidebarItem } from '../../stories/components'
-import { calculatePaths, forEach } from '../components/Advanced/utils/calculate'
-import { generateRelations } from '../components/Advanced/utils/generateRelations'
-import { getTaskRelations } from '../components/Advanced/utils/getTaskRelations'
-import { IChart, INode } from '../types'
-import { ITasksFlowChart, ITasksFlowChartState, ITaskType, IUpdateTask } from '../types/advanced'
+import { calculatePaths, forEach, generateRelations, getTaskRelations } from '../components/Advanced/utils'
+import { IChart, INode, ITasksFlowChart, ITasksFlowChartState, ITaskType, IUpdateTask } from '../types'
 
 const ErrorDiv = styled.div`
 padding: 10px;
@@ -118,6 +115,7 @@ export class TasksFlowChart extends React.Component<ITasksFlowChart, ITasksFlowC
       <Page>
         <Content>
           <FlowChartWithStateAdvanced
+            backgroundImage={this.props.backgroundImage}
             startContent={this.props.startContent}
             endContent={this.props.endContent}
             taskContent={this.props.taskContent}
@@ -182,7 +180,7 @@ export class TasksFlowChart extends React.Component<ITasksFlowChart, ITasksFlowC
             }}
           />
         </Content>
-        <Sidebar>
+        <Sidebar className="sidebar">
           {this.state.errors.map((err) => (
             <ErrorDiv>
               ERROR: {err.type} : {err.details}

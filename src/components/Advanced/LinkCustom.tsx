@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { COLOR_GREY, COLOR_INPUT, COLOR_LINK_CLOSE, COLOR_SUCCESS, ILinkChart, ILinkCustomCallbacks } from '../../types/advanced'
+import { COLOR_DEFAULT_LINK, COLOR_INPUT, COLOR_LINK_CLOSE, COLOR_SUCCESS, ILinkChart, ILinkCustomCallbacks } from '../../types'
 import { ILinkDefaultProps, LinkDefault } from '../Link'
 
 const Label = styled.div`
@@ -47,7 +47,7 @@ export const LinkCustom = (props: ILinkDefaultProps, chart: ILinkChart, callback
   const centerX = startPos.x + (endPos.x - startPos.x) / 2
   const centerY = startPos.y + (endPos.y - startPos.y) / 2
 
-  let color = COLOR_GREY
+  let color = COLOR_DEFAULT_LINK
   const fromNode = chart.nodes[link.from.nodeId]
 
   if (fromNode) {

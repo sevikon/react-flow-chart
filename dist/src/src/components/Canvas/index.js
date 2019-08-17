@@ -6,4 +6,5 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __export(require("./CanvasInner.default"));
 __export(require("./CanvasOuter.default"));
 __export(require("./Canvas.wrapper"));
+__export(require("./CanvasShadow"));
 //# sourceMappingURL=index.js.map
