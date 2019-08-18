@@ -49,7 +49,7 @@ export function generateRelations (tasks: ITaskGroupType): IChart {
 
   const block = {
     w: 200,
-    h: 100,
+    h: 120,
   }
 
   const nodes: IChartNodesArray = {}
@@ -142,7 +142,7 @@ export function generateRelations (tasks: ITaskGroupType): IChart {
   for (const property in tasksMap) {
     if (tasksMap.hasOwnProperty(property)) {
       const node = tasksMap[property]
-      if (node.parents.length === 0 && node.children.length > 0) {
+      if (node.parents.length === 0 && ((node.task && node.task.points > 0) || node.children.length > 0)) {
         generateNode(property, 0, row)
         row = row + node.blockHeight
       }

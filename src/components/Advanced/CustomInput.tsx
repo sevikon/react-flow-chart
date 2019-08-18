@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { ICustomInputParams } from '../../types/advanced'
+import { ICustomInputParams } from '../../types'
 
 const Input = styled.input`
   padding: 10px;
@@ -27,14 +27,22 @@ export class CustomInput extends React.Component<ICustomInputParams, { value: st
   public render () {
     return (
       <Input
+        className="text-input"
         value={this.state.value}
-        placeholder="Add forms etc if required"
+        placeholder={this.props.placeholder || 'Value'}
         onClick={(e) => e.stopPropagation()}
         onMouseUp={(e) => e.stopPropagation()}
         onMouseDown={(e) => e.stopPropagation()}
         onChange={(e) => {
           this.setState({
             value: e.target.value,
+          }, () => {
+            if (this.props.reactive) {
+              this.props.onChange && this.props.onChange({
+                name: 'points',
+                value: this.state.value,
+              })
+            }
           })
         }}
         onBlur={(e) => {

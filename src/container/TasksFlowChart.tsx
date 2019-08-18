@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { FlowChartWithStateAdvanced } from '../'
+import { CustomInput, FlowChartWithStateAdvanced, IOnChangeCallback } from '../'
 import { Content, Page, Sidebar, SidebarItem } from '../../stories/components'
 import { calculatePaths, forEach, generateRelations, getTaskRelations } from '../components/Advanced/utils'
 import { IChart, INode, ITasksFlowChart, ITasksFlowChartState, ITaskType, IUpdateTask } from '../types'
@@ -18,17 +18,26 @@ export class TasksFlowChart extends React.Component<ITasksFlowChart, ITasksFlowC
     super(props)
     const { tasks = [] } = props
     this.state = {
+      chartProgress: {},
+      chartRelations: generateRelations(tasks),
       errors: [],
+      taskFilter: '',
       tasks,
       added: [],
       refreshCode: 1,
       distances: {},
       nodes: {},
-      chartRelations: generateRelations(this.props.tasks),
     }
     this.getCurrentState = this.getCurrentState.bind(this)
     this.recalculateDistances = this.recalculateDistances.bind(this)
+    this.filterTasks = this.filterTasks.bind(this)
 
+  }
+
+  public filterTasks ({ value }: IOnChangeCallback) {
+    this.setState({
+      taskFilter: value,
+    })
   }
 
   public componentDidUpdate (
@@ -38,6 +47,21 @@ export class TasksFlowChart extends React.Component<ITasksFlowChart, ITasksFlowC
       this.setState({
         tasks: this.props.tasks,
       })
+      if (this.props.refreshCode && this.props.refreshCode !== prevProps.refreshCode) {
+        const { tasks = [] } = this.props
+        this.setState({
+          chartProgress: {},
+          chartRelations: generateRelations(tasks),
+          errors: [],
+          taskFilter: '',
+          tasks,
+          added: [],
+          distances: {},
+          nodes: {},
+        }, () => {
+          this.getCurrentState()
+        })
+      }
     }
   }
 
@@ -79,16 +103,18 @@ export class TasksFlowChart extends React.Component<ITasksFlowChart, ITasksFlowC
 
     const { chartRelations, tasks } = this.state
     const { onChange } = this.props
-    const { distances, errors, nodesMap } = calculatePaths(tasks, state)
+    const { chartProgress, distances, errors, nodesMap } = calculatePaths(tasks, state)
     const fixedTasks = getTaskRelations(tasks, chartRelations)
 
     this.setState({
+      chartProgress,
       distances,
       errors,
       tasks: fixedTasks,
       nodes: nodesMap,
     }, () => {
       onChange && onChange({
+        chartProgress,
         chartRelations,
         tasks,
         distances,
@@ -111,10 +137,16 @@ export class TasksFlowChart extends React.Component<ITasksFlowChart, ITasksFlowC
   }
 
   public render () {
+
+    const { taskFilter } = this.state
+    const filtered = this.state.tasks.filter((t) => (this.state.added.indexOf(t.id) < 0)).filter((t) => t.title.toLowerCase().indexOf(taskFilter.toLowerCase()) >= 0)
+
     return (
       <Page>
         <Content>
           <FlowChartWithStateAdvanced
+            chartProgress={this.state.chartProgress}
+            closeButton={this.props.closeButton}
             backgroundImage={this.props.backgroundImage}
             startContent={this.props.startContent}
             endContent={this.props.endContent}
@@ -165,7 +197,9 @@ export class TasksFlowChart extends React.Component<ITasksFlowChart, ITasksFlowC
                 } else {
                   switch (name) {
                     case 'refreshState': {
-                      this.recalculateDistances(state)
+                      this.refreshTasks(state, () => {
+                        this.recalculateDistances(state)
+                      })
                       break
                     }
                     case 'refreshTasks': {
@@ -186,7 +220,13 @@ export class TasksFlowChart extends React.Component<ITasksFlowChart, ITasksFlowC
               ERROR: {err.type} : {err.details}
             </ErrorDiv>
           ))}
-          {this.state.tasks.filter((t) => (this.state.added.indexOf(t.id) < 0)).map((t: ITaskType) => (
+          <CustomInput
+            placeholder={this.props.searchPlaceholder}
+            reactive={true}
+            onChange={this.filterTasks}
+            value={taskFilter}
+          />
+          {filtered.map((t: ITaskType) => (
             <SidebarItem
               key={`task-${t.id}`}
               type={t.title}

@@ -29,23 +29,48 @@ var TasksFlowChart = /** @class */ (function (_super) {
         var _this = _super.call(this, props) || this;
         var _a = props.tasks, tasks = _a === void 0 ? [] : _a;
         _this.state = {
+            chartProgress: {},
+            chartRelations: utils_1.generateRelations(tasks),
             errors: [],
+            taskFilter: '',
             tasks: tasks,
             added: [],
             refreshCode: 1,
             distances: {},
             nodes: {},
-            chartRelations: utils_1.generateRelations(_this.props.tasks),
         };
         _this.getCurrentState = _this.getCurrentState.bind(_this);
         _this.recalculateDistances = _this.recalculateDistances.bind(_this);
+        _this.filterTasks = _this.filterTasks.bind(_this);
         return _this;
     }
+    TasksFlowChart.prototype.filterTasks = function (_a) {
+        var value = _a.value;
+        this.setState({
+            taskFilter: value,
+        });
+    };
     TasksFlowChart.prototype.componentDidUpdate = function (prevProps, prevState, snapshot) {
+        var _this = this;
         if (this.props.tasks !== prevProps.tasks) {
             this.setState({
                 tasks: this.props.tasks,
             });
+            if (this.props.refreshCode && this.props.refreshCode !== prevProps.refreshCode) {
+                var _a = this.props.tasks, tasks = _a === void 0 ? [] : _a;
+                this.setState({
+                    chartProgress: {},
+                    chartRelations: utils_1.generateRelations(tasks),
+                    errors: [],
+                    taskFilter: '',
+                    tasks: tasks,
+                    added: [],
+                    distances: {},
+                    nodes: {},
+                }, function () {
+                    _this.getCurrentState();
+                });
+            }
         }
     };
     TasksFlowChart.prototype.removeTask = function (taskId, callback) {
@@ -80,15 +105,17 @@ var TasksFlowChart = /** @class */ (function (_super) {
     TasksFlowChart.prototype.recalculateDistances = function (state) {
         var _a = this.state, chartRelations = _a.chartRelations, tasks = _a.tasks;
         var onChange = this.props.onChange;
-        var _b = utils_1.calculatePaths(tasks, state), distances = _b.distances, errors = _b.errors, nodesMap = _b.nodesMap;
+        var _b = utils_1.calculatePaths(tasks, state), chartProgress = _b.chartProgress, distances = _b.distances, errors = _b.errors, nodesMap = _b.nodesMap;
         var fixedTasks = utils_1.getTaskRelations(tasks, chartRelations);
         this.setState({
+            chartProgress: chartProgress,
             distances: distances,
             errors: errors,
             tasks: fixedTasks,
             nodes: nodesMap,
         }, function () {
             onChange && onChange({
+                chartProgress: chartProgress,
                 chartRelations: chartRelations,
                 tasks: tasks,
                 distances: distances,
@@ -109,9 +136,11 @@ var TasksFlowChart = /** @class */ (function (_super) {
     };
     TasksFlowChart.prototype.render = function () {
         var _this = this;
+        var taskFilter = this.state.taskFilter;
+        var filtered = this.state.tasks.filter(function (t) { return (_this.state.added.indexOf(t.id) < 0); }).filter(function (t) { return t.title.toLowerCase().indexOf(taskFilter.toLowerCase()) >= 0; });
         return (React.createElement(components_1.Page, null,
             React.createElement(components_1.Content, null,
-                React.createElement(__1.FlowChartWithStateAdvanced, { backgroundImage: this.props.backgroundImage, startContent: this.props.startContent, endContent: this.props.endContent, taskContent: this.props.taskContent, refreshCode: this.state.refreshCode, tasks: this.state.tasks, nodes: this.state.nodes, distances: this.state.distances, initialValue: this.state.chartRelations, handleCreateRelation: this.props.handleCreateRelation, handleDeleteRelation: this.props.handleDeleteRelation, handleDeleteTaskRelations: this.props.handleDeleteTaskRelations, handleCallback: function (name, args, state) {
+                React.createElement(__1.FlowChartWithStateAdvanced, { chartProgress: this.state.chartProgress, closeButton: this.props.closeButton, backgroundImage: this.props.backgroundImage, startContent: this.props.startContent, endContent: this.props.endContent, taskContent: this.props.taskContent, refreshCode: this.state.refreshCode, tasks: this.state.tasks, nodes: this.state.nodes, distances: this.state.distances, initialValue: this.state.chartRelations, handleCreateRelation: this.props.handleCreateRelation, handleDeleteRelation: this.props.handleDeleteRelation, handleDeleteTaskRelations: this.props.handleDeleteTaskRelations, handleCallback: function (name, args, state) {
                         if (state) {
                             if (args) {
                                 switch (name) {
@@ -151,7 +180,9 @@ var TasksFlowChart = /** @class */ (function (_super) {
                             else {
                                 switch (name) {
                                     case 'refreshState': {
-                                        _this.recalculateDistances(state);
+                                        _this.refreshTasks(state, function () {
+                                            _this.recalculateDistances(state);
+                                        });
                                         break;
                                     }
                                     case 'refreshTasks': {
@@ -170,7 +201,8 @@ var TasksFlowChart = /** @class */ (function (_super) {
                     err.type,
                     " : ",
                     err.details)); }),
-                this.state.tasks.filter(function (t) { return (_this.state.added.indexOf(t.id) < 0); }).map(function (t) { return (React.createElement(components_1.SidebarItem, { key: "task-" + t.id, type: t.title, properties: {
+                React.createElement(__1.CustomInput, { placeholder: this.props.searchPlaceholder, reactive: true, onChange: this.filterTasks, value: taskFilter }),
+                filtered.map(function (t) { return (React.createElement(components_1.SidebarItem, { key: "task-" + t.id, type: t.title, properties: {
                         taskId: t.id,
                     }, ports: {
                         port1: {

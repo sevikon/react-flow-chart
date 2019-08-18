@@ -1,7 +1,9 @@
 import * as React from 'react';
+import { IOnChangeCallback } from '../';
 import { IChart, ITasksFlowChart, ITasksFlowChartState, IUpdateTask } from '../types';
 export declare class TasksFlowChart extends React.Component<ITasksFlowChart, ITasksFlowChartState> {
     constructor(props: ITasksFlowChart);
+    filterTasks({ value }: IOnChangeCallback): void;
     componentDidUpdate(prevProps: Readonly<ITasksFlowChart>, prevState: Readonly<ITasksFlowChartState>, snapshot?: any): void;
     removeTask(taskId: string, callback: () => void): void;
     addTask(taskId: string, callback: () => void): void;

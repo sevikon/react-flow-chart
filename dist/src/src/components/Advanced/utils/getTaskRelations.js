@@ -13,8 +13,8 @@ function getTaskRelations(tasks, chartRelations) {
                 var nodeFrom = nodes[from];
                 var nodeTo = nodes[to];
                 if (nodeFrom && nodeTo) {
-                    var taskFrom = nodeFrom.properties.task;
-                    var taskTo = nodeTo.properties.task;
+                    var taskFrom = nodeFrom.properties && nodeFrom.properties.task;
+                    var taskTo = nodeTo.properties && nodeTo.properties.task;
                     if (taskFrom && taskTo) {
                         relations.push({
                             from: taskFrom.id,

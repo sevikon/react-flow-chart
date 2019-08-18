@@ -1,5 +1,4 @@
-import { IChart, IChartNodesArray, ILink, INode } from '../../../types'
-import { IRelationErrorArray, ITaskGroupType } from '../../../types/advanced'
+import { IChart, IChartNodesArray, ILink, INode, IRelationErrorArray, ITaskGroupType } from '../../../types'
 
 export const forEach = (el: object, callback: (val: any) => void) => {
   for (const key in el) {
@@ -11,6 +10,7 @@ export const forEach = (el: object, callback: (val: any) => void) => {
 
 export const calculatePaths = (tasks: ITaskGroupType, state?: IChart) => {
   const distances = {}
+  const chartProgress = {}
   const errors: IRelationErrorArray = []
   const nodesMap: IChartNodesArray = {}
 
@@ -31,17 +31,27 @@ export const calculatePaths = (tasks: ITaskGroupType, state?: IChart) => {
         const { task = {} } = properties
         let distance = task.points ? parseInt(task.points, 10) : 0
         const ascendants = currentNode.properties.ascendants
-        let status = task.status || 'Pending'
+        let status = task.status || 'pending'
+        let progress = 0
+        if (task.status === 'finished') {
+          progress = distance
+        }
+
         ascendants.map((nodeId: string) => {
           const t = nodesMap[nodeId].properties.task
           const d = t && t.points ? parseInt(t.points, 10) : 0
-          distance += d
-          if (t && t.status !== 'finished') {
-            status = 'Pending'
+          if (t) {
+            if (t.status !== 'finished') {
+              status = 'pending'
+            } else {
+              progress += d
+            }
           }
+          distance += d
         })
         properties.status = status
         distances[currentNode.id] = distance
+        chartProgress[currentNode.id] = progress
         nodesMap[currentNode.id] = { ...currentNode, properties }
         const nextNodes = links.filter((l) => (l.from.nodeId === currentNode.id)).map((l) => l.to.nodeId)
         nextNodes.map((nodeId: string) => (
@@ -104,5 +114,5 @@ export const calculatePaths = (tasks: ITaskGroupType, state?: IChart) => {
     }
 
   }
-  return { distances, errors, nodesMap }
+  return { chartProgress, distances, errors, nodesMap }
 }

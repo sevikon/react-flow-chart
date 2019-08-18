@@ -38,9 +38,16 @@ var CustomInput = /** @class */ (function (_super) {
     };
     CustomInput.prototype.render = function () {
         var _this = this;
-        return (React.createElement(Input, { value: this.state.value, placeholder: "Add forms etc if required", onClick: function (e) { return e.stopPropagation(); }, onMouseUp: function (e) { return e.stopPropagation(); }, onMouseDown: function (e) { return e.stopPropagation(); }, onChange: function (e) {
+        return (React.createElement(Input, { className: "text-input", value: this.state.value, placeholder: this.props.placeholder || 'Value', onClick: function (e) { return e.stopPropagation(); }, onMouseUp: function (e) { return e.stopPropagation(); }, onMouseDown: function (e) { return e.stopPropagation(); }, onChange: function (e) {
                 _this.setState({
                     value: e.target.value,
+                }, function () {
+                    if (_this.props.reactive) {
+                        _this.props.onChange && _this.props.onChange({
+                            name: 'points',
+                            value: _this.state.value,
+                        });
+                    }
                 });
             }, onBlur: function (e) {
                 _this.props.onChange && _this.props.onChange({

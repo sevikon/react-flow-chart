@@ -32,10 +32,8 @@ export class FlowChartWithStateAdvanced extends React.Component<IFlowChartWithSt
     } else if (this.props.tasks !== prevProps.tasks) {
       this.handleCallback('refreshState')
     }
-    if (this.props.nodes !== prevProps.nodes) {
-      this.setState({
-        nodes: this.props.nodes,
-      })
+    if (this.props.initialValue !== prevProps.initialValue) {
+      this.setState(this.props.initialValue)
     }
   }
 
@@ -45,7 +43,7 @@ export class FlowChartWithStateAdvanced extends React.Component<IFlowChartWithSt
   }
 
   public render () {
-    const { Components, tasks, distances } = this.props
+    const { Components, chartProgress, tasks, distances } = this.props
 
     const callbacks = {
       ...this.stateActions,
@@ -119,6 +117,8 @@ export class FlowChartWithStateAdvanced extends React.Component<IFlowChartWithSt
           NodeInner: ({ node }) => NodeInnerDefaultWrapper({
             node,
             props: {
+              chartProgress,
+              closeButton: this.props.closeButton,
               startContent: this.props.startContent,
               endContent: this.props.endContent,
               taskContent: this.props.taskContent,

@@ -22,7 +22,7 @@ const OutputNode = styled.div`
 const TaskNode = styled.div`
   position: absolute;
   width: 240px;
-  height: 100px;
+  height: 120px;
   padding: 30px;
   display: flex;
   justify-content: center;
@@ -55,7 +55,7 @@ export const NodeCustom = React.forwardRef(({ node, children, ...otherProps }: I
     )
   } else {
     const { task = {} } = node.properties
-    const { status = 'Pending' } = task
+    const { status = 'pending' } = task
     return (
       <TaskNode {...otherProps} className={`flow-chart-task-node ${status.toLowerCase()}`}>
         {children}

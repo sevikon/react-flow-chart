@@ -20,6 +20,7 @@ exports.forEach = function (el, callback) {
 };
 exports.calculatePaths = function (tasks, state) {
     var distances = {};
+    var chartProgress = {};
     var errors = [];
     var nodesMap = {};
     if (state) {
@@ -38,17 +39,27 @@ exports.calculatePaths = function (tasks, state) {
                 var _b = properties.task, task = _b === void 0 ? {} : _b;
                 var distance_1 = task.points ? parseInt(task.points, 10) : 0;
                 var ascendants = currentNode.properties.ascendants;
-                var status_1 = task.status || 'Pending';
+                var status_1 = task.status || 'pending';
+                var progress_1 = 0;
+                if (task.status === 'finished') {
+                    progress_1 = distance_1;
+                }
                 ascendants.map(function (nodeId) {
                     var t = nodesMap[nodeId].properties.task;
                     var d = t && t.points ? parseInt(t.points, 10) : 0;
-                    distance_1 += d;
-                    if (t && t.status !== 'finished') {
-                        status_1 = 'Pending';
+                    if (t) {
+                        if (t.status !== 'finished') {
+                            status_1 = 'pending';
+                        }
+                        else {
+                            progress_1 += d;
+                        }
                     }
+                    distance_1 += d;
                 });
                 properties.status = status_1;
                 distances[currentNode.id] = distance_1;
+                chartProgress[currentNode.id] = progress_1;
                 nodesMap[currentNode.id] = __assign({}, currentNode, { properties: properties });
                 var nextNodes = links_1.filter(function (l) { return (l.from.nodeId === currentNode.id); }).map(function (l) { return l.to.nodeId; });
                 nextNodes.map(function (nodeId) { return (calculateNodePath_1(nodesMap[nodeId])); });
@@ -106,6 +117,6 @@ exports.calculatePaths = function (tasks, state) {
             }
         }
     }
-    return { distances: distances, errors: errors, nodesMap: nodesMap };
+    return { chartProgress: chartProgress, distances: distances, errors: errors, nodesMap: nodesMap };
 };
 //# sourceMappingURL=calculate.js.map

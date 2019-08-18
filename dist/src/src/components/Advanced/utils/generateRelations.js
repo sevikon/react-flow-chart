@@ -43,7 +43,7 @@ function generateRelations(tasks) {
     };
     var block = {
         w: 200,
-        h: 100,
+        h: 120,
     };
     var nodes = {};
     var links = {};
@@ -131,7 +131,7 @@ function generateRelations(tasks) {
     for (var property in tasksMap) {
         if (tasksMap.hasOwnProperty(property)) {
             var node = tasksMap[property];
-            if (node.parents.length === 0 && node.children.length > 0) {
+            if (node.parents.length === 0 && ((node.task && node.task.points > 0) || node.children.length > 0)) {
                 generateNode(property, 0, row);
                 row = row + node.blockHeight;
             }

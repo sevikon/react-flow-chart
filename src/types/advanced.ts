@@ -52,11 +52,13 @@ export interface IOnChangeCallback {
 export interface INodeInnerDefaultCallbacks {
   tasks: ITaskGroupType,
   distances: object,
+  chartProgress: object,
   onRemove: ({ node }: INodeInnerDefaultPropsAdvanced) => void,
   onChange: ({ name, value }: IOnChangeCallback) => void,
   startContent?: () => void,
-  endContent?: (distance: number) => void,
+  endContent?: (distance: number, progress: number) => void,
   taskContent?: (task: ITaskType) => void,
+  closeButton?: () => void,
 }
 
 export interface INodeInnerDefaultWrapperProps {
@@ -66,6 +68,8 @@ export interface INodeInnerDefaultWrapperProps {
 
 export interface ICustomInputParams {
   onChange: ({ name, value }: IOnChangeCallback) => void,
+  placeholder?: string,
+  reactive?: boolean,
   value: string
 }
 
@@ -93,6 +97,7 @@ interface ITaskRelationType {
 export interface IFlowChartWithStatePropsAdvanced {
   backgroundImage?: string,
   distances: object,
+  chartProgress: object,
   Components?: IFlowChartComponents,
   handleCallback?: IHandleCallbackFunc,
   handleCreateRelation?: IHandleRelationFunc,
@@ -103,10 +108,11 @@ export interface IFlowChartWithStatePropsAdvanced {
   initialValue: IChart
   taskContent?: (task: ITaskType) => void,
   startContent?: () => void,
-  endContent?: (distance: number) => void,
+  endContent?: (distance: number, progress: number) => void,
   tasks: ITaskGroupType,
   nodes: IChartNodesArray,
   refreshCode: number,
+  closeButton?: () => void,
 }
 
 export interface IUpdateTask {
@@ -124,15 +130,19 @@ export interface ITasksFlowChart {
   handleUpdateTask?: IHandleTaskFunc,
   onChange?: ({}: IOnChangeFunc) => void,
   startContent?: () => void,
-  endContent?: (distance: number) => void,
+  endContent?: (distance: number, progress: number) => void,
   taskContent?: (task: ITaskType) => void,
+  closeButton?: () => void,
   tasks: ITaskGroupType,
+  searchPlaceholder?: string
+  refreshCode?: string
 }
 
 export interface IOnChangeFunc {
   chartRelations: IChart,
   tasks: ITaskGroupType,
-  distances: object
+  distances: object,
+  chartProgress: object,
 }
 
 export interface ITasksFlowChartState {
@@ -140,9 +150,11 @@ export interface ITasksFlowChartState {
   chartRelations: IChart,
   tasks: ITaskGroupType,
   distances: object,
+  chartProgress: object,
   added: IAddedTasksArray,
   refreshCode: number,
-  nodes: IChartNodesArray
+  nodes: IChartNodesArray,
+  taskFilter: string,
 }
 
 export const COLOR_INPUT = '#F9A825'

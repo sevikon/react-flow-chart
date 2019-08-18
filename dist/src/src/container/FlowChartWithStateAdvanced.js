@@ -60,10 +60,8 @@ var FlowChartWithStateAdvanced = /** @class */ (function (_super) {
         else if (this.props.tasks !== prevProps.tasks) {
             this.handleCallback('refreshState');
         }
-        if (this.props.nodes !== prevProps.nodes) {
-            this.setState({
-                nodes: this.props.nodes,
-            });
+        if (this.props.initialValue !== prevProps.initialValue) {
+            this.setState(this.props.initialValue);
         }
     };
     FlowChartWithStateAdvanced.prototype.handleCallback = function (funcName, args) {
@@ -72,7 +70,7 @@ var FlowChartWithStateAdvanced = /** @class */ (function (_super) {
     };
     FlowChartWithStateAdvanced.prototype.render = function () {
         var _this = this;
-        var _a = this.props, Components = _a.Components, tasks = _a.tasks, distances = _a.distances;
+        var _a = this.props, Components = _a.Components, chartProgress = _a.chartProgress, tasks = _a.tasks, distances = _a.distances;
         var callbacks = __assign({}, this.stateActions, { onLinkComplete: function () {
                 var _a;
                 var args = [];
@@ -134,6 +132,8 @@ var FlowChartWithStateAdvanced = /** @class */ (function (_super) {
                     return __1.NodeInnerDefaultWrapper({
                         node: node,
                         props: {
+                            chartProgress: chartProgress,
+                            closeButton: _this.props.closeButton,
                             startContent: _this.props.startContent,
                             endContent: _this.props.endContent,
                             taskContent: _this.props.taskContent,

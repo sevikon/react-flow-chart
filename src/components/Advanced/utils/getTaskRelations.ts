@@ -1,5 +1,4 @@
-import { IChart } from '../../../types'
-import { ITaskGroupType } from '../../../types/advanced'
+import { IChart, ITaskGroupType } from '../../../types'
 
 export function getTaskRelations (tasks: ITaskGroupType, chartRelations: IChart): ITaskGroupType {
 
@@ -17,8 +16,8 @@ export function getTaskRelations (tasks: ITaskGroupType, chartRelations: IChart)
         const nodeFrom = nodes[from]
         const nodeTo = nodes[to]
         if (nodeFrom && nodeTo) {
-          const taskFrom = nodeFrom.properties.task
-          const taskTo = nodeTo.properties.task
+          const taskFrom = nodeFrom.properties && nodeFrom.properties.task
+          const taskTo = nodeTo.properties && nodeTo.properties.task
           if (taskFrom && taskTo) {
             relations.push({
               from: taskFrom.id,

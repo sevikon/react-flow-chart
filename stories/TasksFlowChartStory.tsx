@@ -2,7 +2,16 @@ import * as React from 'react'
 import { TasksFlowChart } from '../src/container'
 import { COLOR_ERROR, COLOR_SUCCESS } from '../src/types'
 
-export class TasksFlowChartStory extends React.Component<{}, {}> {
+export class TasksFlowChartStory extends React.Component<{}, {
+  refreshCode: number,
+}> {
+
+  constructor (props: any) {
+    super(props)
+    this.state = {
+      refreshCode: 1,
+    }
+  }
 
   public render () {
 
@@ -77,7 +86,17 @@ export class TasksFlowChartStory extends React.Component<{}, {}> {
 
     return (
       <div>
+        <button
+          onClick={() => {
+            this.setState({
+              refreshCode: this.state.refreshCode + 1,
+            })
+          }}
+        >Refresh
+        </button>
         <TasksFlowChart
+          refreshCode={this.state.refreshCode.toString()}
+          searchPlaceholder="Search For Tasks"
           backgroundImage={'http://localhost:3000/uploads/stock/khPiBGp_1545152212lar5rDPar6.jpg'}
           tasks={startTasks}
           // handleCreateRelation={({ from, to }) => {
@@ -95,13 +114,15 @@ export class TasksFlowChartStory extends React.Component<{}, {}> {
           startContent={() => (
             <p>PROJECT START</p>
           )}
-          endContent={(distance) => (
-            <p>PROJECT END ({distance})</p>
+          endContent={(distance, progress) => (
+            <p>PROJECT END ({progress}/{distance})</p>
           )}
+          closeButton={() => <div>X</div>}
           taskContent={(task) => (<div
             style={{ color: task && task.status === 'finished' ? COLOR_SUCCESS : COLOR_ERROR }}
           >
             <p>{task.id}</p>
+            <p>P: {task.points}</p>
             <i
               style={{ width: 15, position: 'absolute', right: 25, top: 5 }}
               onClick={

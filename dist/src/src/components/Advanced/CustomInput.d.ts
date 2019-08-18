@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ICustomInputParams } from '../../types/advanced';
+import { ICustomInputParams } from '../../types';
 export declare class CustomInput extends React.Component<ICustomInputParams, {
     value: string;
 }> {
