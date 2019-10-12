@@ -141,10 +141,13 @@ export class TasksFlowChart extends React.Component<ITasksFlowChart, ITasksFlowC
     const { taskFilter } = this.state
     const filtered = this.state.tasks.filter((t) => (this.state.added.indexOf(t.id) < 0)).filter((t) => t.title.toLowerCase().indexOf(taskFilter.toLowerCase()) >= 0)
 
+    const editable = this.props.editable !== false
+
     return (
       <Page>
         <Content>
           <FlowChartWithStateAdvanced
+            editable={editable}
             chartProgress={this.state.chartProgress}
             closeButton={this.props.closeButton}
             backgroundImage={this.props.backgroundImage}
@@ -175,16 +178,20 @@ export class TasksFlowChart extends React.Component<ITasksFlowChart, ITasksFlowC
                       break
                     }
                     case 'onCanvasDrop': {
-                      this.addTask(args[0].data.properties.taskId, () => {
-                        this.recalculateDistances(state)
-                      })
+                      if (editable) {
+                        this.addTask(args[0].data.properties.taskId, () => {
+                          this.recalculateDistances(state)
+                        })
+                      }
                       break
                     }
                     case 'onDeleteKey': {
                       if (args.taskId) {
-                        this.removeTask(args.taskId, () => {
-                          this.recalculateDistances(state)
-                        })
+                        if (editable) {
+                          this.removeTask(args.taskId, () => {
+                            this.recalculateDistances(state)
+                          })
+                        }
                       } else if (args.linkId) {
                         this.recalculateDistances(state)
                       }

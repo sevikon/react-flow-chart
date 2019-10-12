@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ILink, INode, INodeInnerDefaultPropsAdvanced, IOnDragNode, IOnLinkCancel, IOnLinkComplete, IOnLinkMove, IOnLinkStart, IOnNodeClick, IOnNodeSizeChange, IOnPortPositionChange, IPortDefaultProps, IPortsDefaultProps, IPosition, ISelectedOrHovered } from '../../';
 import { INodeDefaultProps } from './Node.default';
 export interface INodeWrapperProps {
+    editable?: boolean;
     node: INode;
     Component: React.FunctionComponent<INodeDefaultProps>;
     offset: IPosition;
@@ -22,4 +23,4 @@ export interface INodeWrapperProps {
     onNodeClick: IOnNodeClick;
     onNodeSizeChange: IOnNodeSizeChange;
 }
-export declare const NodeWrapper: ({ node, onDragNode, onNodeClick, isSelected, Component, onNodeSizeChange, NodeInner, Ports, Port, offset, selected, selectedLink, hovered, hoveredLink, onPortPositionChange, onLinkStart, onLinkMove, onLinkComplete, onLinkCancel, }: INodeWrapperProps) => JSX.Element;
+export declare const NodeWrapper: ({ editable, node, onDragNode, onNodeClick, isSelected, Component, onNodeSizeChange, NodeInner, Ports, Port, offset, selected, selectedLink, hovered, hoveredLink, onPortPositionChange, onLinkStart, onLinkMove, onLinkComplete, onLinkCancel, }: INodeWrapperProps) => JSX.Element;

@@ -40,5 +40,6 @@ export interface IFlowChartProps {
      * Custom components
      */
     Components?: IFlowChartComponents;
+    editable?: boolean;
 }
 export declare const FlowChart: (props: IFlowChartProps) => JSX.Element;

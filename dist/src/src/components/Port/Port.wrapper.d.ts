@@ -3,6 +3,7 @@ import { ILink, INode, IOnLinkCancel, IOnLinkComplete, IOnLinkMove, IOnLinkStart
 import CanvasContext from '../Canvas/CanvasContext';
 import { IPortDefaultProps } from './Port.default';
 export interface IPortWrapperProps {
+    editable?: boolean;
     style?: object;
     offset: IPosition;
     selected: ISelectedOrHovered | undefined;

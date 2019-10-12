@@ -138,9 +138,10 @@ var TasksFlowChart = /** @class */ (function (_super) {
         var _this = this;
         var taskFilter = this.state.taskFilter;
         var filtered = this.state.tasks.filter(function (t) { return (_this.state.added.indexOf(t.id) < 0); }).filter(function (t) { return t.title.toLowerCase().indexOf(taskFilter.toLowerCase()) >= 0; });
+        var editable = this.props.editable !== false;
         return (React.createElement(components_1.Page, null,
             React.createElement(components_1.Content, null,
-                React.createElement(__1.FlowChartWithStateAdvanced, { chartProgress: this.state.chartProgress, closeButton: this.props.closeButton, backgroundImage: this.props.backgroundImage, startContent: this.props.startContent, endContent: this.props.endContent, taskContent: this.props.taskContent, refreshCode: this.state.refreshCode, tasks: this.state.tasks, nodes: this.state.nodes, distances: this.state.distances, initialValue: this.state.chartRelations, handleCreateRelation: this.props.handleCreateRelation, handleDeleteRelation: this.props.handleDeleteRelation, handleDeleteTaskRelations: this.props.handleDeleteTaskRelations, handleCallback: function (name, args, state) {
+                React.createElement(__1.FlowChartWithStateAdvanced, { editable: editable, chartProgress: this.state.chartProgress, closeButton: this.props.closeButton, backgroundImage: this.props.backgroundImage, startContent: this.props.startContent, endContent: this.props.endContent, taskContent: this.props.taskContent, refreshCode: this.state.refreshCode, tasks: this.state.tasks, nodes: this.state.nodes, distances: this.state.distances, initialValue: this.state.chartRelations, handleCreateRelation: this.props.handleCreateRelation, handleDeleteRelation: this.props.handleDeleteRelation, handleDeleteTaskRelations: this.props.handleDeleteTaskRelations, handleCallback: function (name, args, state) {
                         if (state) {
                             if (args) {
                                 switch (name) {
@@ -156,16 +157,20 @@ var TasksFlowChart = /** @class */ (function (_super) {
                                         break;
                                     }
                                     case 'onCanvasDrop': {
-                                        _this.addTask(args[0].data.properties.taskId, function () {
-                                            _this.recalculateDistances(state);
-                                        });
+                                        if (editable) {
+                                            _this.addTask(args[0].data.properties.taskId, function () {
+                                                _this.recalculateDistances(state);
+                                            });
+                                        }
                                         break;
                                     }
                                     case 'onDeleteKey': {
                                         if (args.taskId) {
-                                            _this.removeTask(args.taskId, function () {
-                                                _this.recalculateDistances(state);
-                                            });
+                                            if (editable) {
+                                                _this.removeTask(args.taskId, function () {
+                                                    _this.recalculateDistances(state);
+                                                });
+                                            }
                                         }
                                         else if (args.linkId) {
                                             _this.recalculateDistances(state);

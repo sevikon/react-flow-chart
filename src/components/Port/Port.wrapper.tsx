@@ -18,6 +18,7 @@ const composedPath = (el: HTMLElement | null) => {
 }
 
 export interface IPortWrapperProps {
+  editable?: boolean,
   style?: object
   offset: IPosition
   selected: ISelectedOrHovered | undefined
@@ -122,6 +123,7 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
   }
   public render () {
     const {
+      editable = true,
       selected,
       selectedLink,
       hovered,
@@ -136,7 +138,7 @@ export class PortWrapper extends React.Component<IPortWrapperProps> {
       <div
         data-port-id={port.id}
         data-node-id={node.id}
-        onMouseDown={this.onMouseDown}
+        onMouseDown={!editable ? undefined : this.onMouseDown}
         ref={this.getNodRef}
         style={style}
       >

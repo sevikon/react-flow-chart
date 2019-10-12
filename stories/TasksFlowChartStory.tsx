@@ -95,6 +95,7 @@ export class TasksFlowChartStory extends React.Component<{}, {
         >Refresh
         </button>
         <TasksFlowChart
+          editable={false}
           refreshCode={this.state.refreshCode.toString()}
           searchPlaceholder="Search For Tasks"
           backgroundImage={'http://localhost:3000/uploads/stock/khPiBGp_1545152212lar5rDPar6.jpg'}

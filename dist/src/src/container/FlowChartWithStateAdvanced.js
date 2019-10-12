@@ -70,7 +70,8 @@ var FlowChartWithStateAdvanced = /** @class */ (function (_super) {
     };
     FlowChartWithStateAdvanced.prototype.render = function () {
         var _this = this;
-        var _a = this.props, Components = _a.Components, chartProgress = _a.chartProgress, tasks = _a.tasks, distances = _a.distances;
+        var _a = this.props, Components = _a.Components, chartProgress = _a.chartProgress, editable = _a.editable, tasks = _a.tasks, distances = _a.distances;
+        var isEditable = editable !== false;
         var callbacks = __assign({}, this.stateActions, { onLinkComplete: function () {
                 var _a;
                 var args = [];
@@ -79,7 +80,7 @@ var FlowChartWithStateAdvanced = /** @class */ (function (_super) {
                 }
                 var data = args[0];
                 // fix link -> always should be from port2 to port1
-                if (data.fromPortId === 'port1') {
+                if (data.fromPortId === 'port1' && isEditable) {
                     args[0] = __assign({}, data, { fromPortId: 'port2', fromNodeId: data.toNodeId, toNodeId: data.fromNodeId, toPortId: 'port1' });
                     data = args[0];
                     var linksFixed = _this.state.links;
@@ -95,7 +96,7 @@ var FlowChartWithStateAdvanced = /** @class */ (function (_super) {
                         links: linksFixed,
                     });
                 }
-                if (data.fromPortId === data.toPortId) {
+                if (data.fromPortId === data.toPortId || !isEditable) {
                     var funcArgs = { linkId: data.linkId };
                     _this.setState(_this.stateActions.onLinkClick(funcArgs), function () { return callbacks.onDeleteKey(); });
                 }
@@ -125,9 +126,11 @@ var FlowChartWithStateAdvanced = /** @class */ (function (_super) {
                 for (var _i = 0; _i < arguments.length; _i++) {
                     args[_i] = arguments[_i];
                 }
-                _this.setState((_a = _this.stateActions).onCanvasDrop.apply(_a, args), function () { return _this.handleCallback('onCanvasDrop', args); });
+                if (isEditable) {
+                    _this.setState((_a = _this.stateActions).onCanvasDrop.apply(_a, args), function () { return _this.handleCallback('onCanvasDrop', args); });
+                }
             } });
-        return (React.createElement(index_1.FlowChart, { chart: this.state, callbacks: callbacks, Components: __assign({}, Components, { CanvasOuter: this.canvas, Node: __1.NodeCustom, Port: __1.PortCustom, NodeInner: function (_a) {
+        return (React.createElement(index_1.FlowChart, { editable: isEditable, chart: this.state, callbacks: callbacks, Components: __assign({}, Components, { CanvasOuter: this.canvas, Node: __1.NodeCustom, Port: __1.PortCustom, NodeInner: function (_a) {
                     var node = _a.node;
                     return __1.NodeInnerDefaultWrapper({
                         node: node,
@@ -141,11 +144,13 @@ var FlowChartWithStateAdvanced = /** @class */ (function (_super) {
                             distances: distances,
                             onRemove: function (_a) {
                                 var nodeInner = _a.node;
-                                var data = { nodeId: nodeInner.id, taskId: nodeInner.properties.taskId };
-                                if (nodeInner.properties.task) {
-                                    _this.props.handleDeleteTaskRelations && _this.props.handleDeleteTaskRelations(nodeInner.properties.task);
+                                if (isEditable) {
+                                    var data_1 = { nodeId: nodeInner.id, taskId: nodeInner.properties.taskId };
+                                    if (nodeInner.properties.task) {
+                                        _this.props.handleDeleteTaskRelations && _this.props.handleDeleteTaskRelations(nodeInner.properties.task);
+                                    }
+                                    _this.setState(_this.stateActions.onNodeClick(data_1), function () { return callbacks.onDeleteKey(data_1); });
                                 }
-                                _this.setState(_this.stateActions.onNodeClick(data), function () { return callbacks.onDeleteKey(data); });
                             },
                             onChange: function (_a) {
                                 var name = _a.name, value = _a.value;
@@ -158,7 +163,7 @@ var FlowChartWithStateAdvanced = /** @class */ (function (_super) {
                         },
                     });
                 }, Link: function (props) { return __1.LinkCustomWrapper(__assign({}, props), { nodes: _this.state.nodes }, {
-                    onDelete: function (link) {
+                    onDelete: !isEditable ? undefined : function (link) {
                         if (link.from.nodeId && link.to.nodeId) {
                             var fromNode = _this.state.nodes[link.from.nodeId];
                             var toNode = _this.state.nodes[link.to.nodeId];

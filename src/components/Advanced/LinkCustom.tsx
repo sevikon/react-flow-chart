@@ -5,6 +5,9 @@ import { ILinkDefaultProps, LinkDefault } from '../Link'
 
 const Label = styled.div`
   position: absolute;
+  height: 20px;
+  width: 20px;
+  z-index: 3;
 `
 
 const Button = styled.div`
@@ -14,7 +17,7 @@ const Button = styled.div`
   padding: 0;
   height: 20px;
   width: 20px;
-  transform: translate(50%, -50%);
+  transform: translate(-50%, -50%);
   background: ${COLOR_LINK_CLOSE};
   color: white;
   border-radius: 50%;
@@ -65,14 +68,15 @@ export const LinkCustom = (props: ILinkDefaultProps, chart: ILinkChart, callback
         {props.link.properties && props.link.properties.label && (
           <LabelContent>{props.link.properties && props.link.properties.label}</LabelContent>
         )}
-        <Button
+        {callbacks.onDelete && <Button
+          className="remove-link"
           onClick={(e) => {
-            callbacks.onDelete(link)
+            callbacks.onDelete && callbacks.onDelete(link)
             e.stopPropagation()
           }}
         >
           x
-        </Button>
+        </Button>}
       </Label>
     </>
   )

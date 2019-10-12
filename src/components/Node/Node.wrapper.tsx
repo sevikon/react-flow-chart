@@ -9,6 +9,7 @@ import {
 import { INodeDefaultProps, NodeDefault } from './Node.default'
 
 export interface INodeWrapperProps {
+  editable?: boolean,
   node: INode
   Component: React.FunctionComponent<INodeDefaultProps>
   offset: IPosition
@@ -30,7 +31,9 @@ export interface INodeWrapperProps {
   onNodeSizeChange: IOnNodeSizeChange
 }
 
-export const NodeWrapper = ({
+export const NodeWrapper = (
+  {
+  editable = true,
   node,
   onDragNode,
   onNodeClick,
@@ -73,6 +76,7 @@ export const NodeWrapper = ({
       <Ports>
         { Object.keys(node.ports).map((portId) => (
           <PortWrapper
+            editable={editable}
             key={portId}
             offset={offset}
             selected={selected}

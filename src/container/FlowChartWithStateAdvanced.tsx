@@ -43,7 +43,9 @@ export class FlowChartWithStateAdvanced extends React.Component<IFlowChartWithSt
   }
 
   public render () {
-    const { Components, chartProgress, tasks, distances } = this.props
+    const { Components, chartProgress, editable, tasks, distances } = this.props
+
+    const isEditable = editable !== false
 
     const callbacks = {
       ...this.stateActions,
@@ -51,7 +53,7 @@ export class FlowChartWithStateAdvanced extends React.Component<IFlowChartWithSt
         let data = args[0]
 
         // fix link -> always should be from port2 to port1
-        if (data.fromPortId === 'port1') {
+        if (data.fromPortId === 'port1' && isEditable) {
           args[0] = {
             ...data,
             fromPortId: 'port2',
@@ -77,7 +79,7 @@ export class FlowChartWithStateAdvanced extends React.Component<IFlowChartWithSt
           })
         }
 
-        if (data.fromPortId === data.toPortId) {
+        if (data.fromPortId === data.toPortId || !isEditable) {
           const funcArgs = { linkId: data.linkId }
           this.setState(this.stateActions.onLinkClick(funcArgs), () => callbacks.onDeleteKey())
         } else {
@@ -101,12 +103,15 @@ export class FlowChartWithStateAdvanced extends React.Component<IFlowChartWithSt
         this.setState(this.stateActions.onDeleteKey(...args), () => this.handleCallback('onDeleteKey', ...args))
       },
       onCanvasDrop: (...args: any) => {
-        this.setState(this.stateActions.onCanvasDrop(...args), () => this.handleCallback('onCanvasDrop', args))
+        if (isEditable) {
+          this.setState(this.stateActions.onCanvasDrop(...args), () => this.handleCallback('onCanvasDrop', args))
+        }
       },
     }
 
     return (
       <FlowChart
+        editable={isEditable}
         chart={this.state}
         callbacks={callbacks}
         Components={{
@@ -125,11 +130,13 @@ export class FlowChartWithStateAdvanced extends React.Component<IFlowChartWithSt
               tasks,
               distances,
               onRemove: ({ node: nodeInner }) => {
-                const data = { nodeId: nodeInner.id, taskId: nodeInner.properties.taskId }
-                if (nodeInner.properties.task) {
-                  this.props.handleDeleteTaskRelations && this.props.handleDeleteTaskRelations(nodeInner.properties.task)
+                if (isEditable) {
+                  const data = { nodeId: nodeInner.id, taskId: nodeInner.properties.taskId }
+                  if (nodeInner.properties.task) {
+                    this.props.handleDeleteTaskRelations && this.props.handleDeleteTaskRelations(nodeInner.properties.task)
+                  }
+                  this.setState(this.stateActions.onNodeClick(data), () => callbacks.onDeleteKey(data))
                 }
-                this.setState(this.stateActions.onNodeClick(data), () => callbacks.onDeleteKey(data))
               },
               onChange: ({ name, value }) => {
                 this.handleCallback('onNodeChange', {
@@ -141,7 +148,7 @@ export class FlowChartWithStateAdvanced extends React.Component<IFlowChartWithSt
             },
           }),
           Link: (props) => LinkCustomWrapper({ ...props }, { nodes: this.state.nodes }, {
-            onDelete: (link: ILink) => {
+            onDelete: !isEditable ? undefined : (link: ILink) => {
               if (link.from.nodeId && link.to.nodeId) {
                 const fromNode = this.state.nodes[link.from.nodeId]
                 const toNode = this.state.nodes[link.to.nodeId]

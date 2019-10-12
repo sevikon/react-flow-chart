@@ -29,7 +29,7 @@ export interface IAddedTasksArray extends Array<string> {
 }
 
 export interface ILinkCustomCallbacks {
-  onDelete: (link: ILink) => void,
+  onDelete?: (link: ILink) => void,
 }
 
 export interface IRelationError {
@@ -96,6 +96,7 @@ interface ITaskRelationType {
 
 export interface IFlowChartWithStatePropsAdvanced {
   backgroundImage?: string,
+  editable?: boolean,
   distances: object,
   chartProgress: object,
   Components?: IFlowChartComponents,
@@ -123,6 +124,7 @@ export interface IUpdateTask {
 
 export interface ITasksFlowChart {
   backgroundImage?: string,
+  editable?: boolean,
   handleCreateRelation?: IHandleRelationFunc,
   handleDeleteRelation?: IHandleRelationFunc,
   handleDeleteTaskRelations?: IHandleTaskFunc,

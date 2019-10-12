@@ -100,8 +100,8 @@ var PortWrapper = /** @class */ (function (_super) {
         return _this;
     }
     PortWrapper.prototype.render = function () {
-        var _a = this.props, selected = _a.selected, selectedLink = _a.selectedLink, hovered = _a.hovered, hoveredLink = _a.hoveredLink, style = _a.style, port = _a.port, node = _a.node, _b = _a.Component, Component = _b === void 0 ? Port_default_1.PortDefault : _b;
-        return (React.createElement("div", { "data-port-id": port.id, "data-node-id": node.id, onMouseDown: this.onMouseDown, ref: this.getNodRef, style: style },
+        var _a = this.props, _b = _a.editable, editable = _b === void 0 ? true : _b, selected = _a.selected, selectedLink = _a.selectedLink, hovered = _a.hovered, hoveredLink = _a.hoveredLink, style = _a.style, port = _a.port, node = _a.node, _c = _a.Component, Component = _c === void 0 ? Port_default_1.PortDefault : _c;
+        return (React.createElement("div", { "data-port-id": port.id, "data-node-id": node.id, onMouseDown: !editable ? undefined : this.onMouseDown, ref: this.getNodRef, style: style },
             React.createElement(Component, { port: port, isSelected: !!selected && selected.type === 'port' && selected.id === port.id, isHovered: !!hovered && hovered.type === 'port' && hovered.id === port.id, isLinkSelected: selectedLink
                     ? ((selectedLink.from.portId === port.id && selectedLink.from.nodeId === node.id) ||
                         (selectedLink.to.portId === port.id && selectedLink.to.nodeId === node.id))

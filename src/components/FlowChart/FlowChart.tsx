@@ -48,7 +48,9 @@ export interface IFlowChartProps {
   /**
    * Custom components
    */
-  Components?: IFlowChartComponents
+  Components?: IFlowChartComponents,
+
+  editable?: boolean,
 }
 
 export const FlowChart = (props: IFlowChartProps) => {
@@ -82,6 +84,7 @@ export const FlowChart = (props: IFlowChartProps) => {
       Node = NodeDefault,
       Link = LinkDefault,
     } = {},
+    editable = true,
   } = props
   const { links, nodes, selected, hovered, offset } = chart
 
@@ -146,6 +149,7 @@ export const FlowChart = (props: IFlowChartProps) => {
 
         return (
           <NodeWrapper
+            editable={editable}
             key={nodeId}
             Component={Node}
             node={nodes[nodeId]}
