@@ -123,7 +123,7 @@ var TasksFlowChart = /** @class */ (function (_super) {
         });
     };
     TasksFlowChart.prototype.refreshTasks = function (state, callback) {
-        var added = this.state.added;
+        var added = [];
         utils_1.forEach(state.nodes, function (n) {
             var _a = n.properties, properties = _a === void 0 ? {} : _a;
             if (properties.taskId) {

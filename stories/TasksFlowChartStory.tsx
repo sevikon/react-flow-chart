@@ -1,88 +1,92 @@
 import * as React from 'react'
 import { TasksFlowChart } from '../src/container'
-import { COLOR_ERROR, COLOR_SUCCESS } from '../src/types'
+import { COLOR_ERROR, COLOR_SUCCESS, ITaskGroupType } from '../src/types'
+
+const startTasks: ITaskGroupType = [{
+  title: 'Task A',
+  id: 'taskA',
+  points: 20,
+  status: 'finished',
+  dependencies: [],
+}, {
+  title: 'Task B',
+  id: 'taskB',
+  points: 30,
+  status: 'finished',
+  dependencies: ['taskA'],
+}, {
+  title: 'Task C',
+  id: 'taskC',
+  points: 40,
+  status: 'finished',
+  dependencies: ['taskA'],
+}, {
+  title: 'Task D',
+  id: 'taskD',
+  points: 40,
+  status: 'finished',
+  dependencies: [],
+}, {
+  title: 'Task E',
+  id: 'taskE',
+  points: 40,
+  status: 'finished',
+  // dependencies: ['taskC', 'taskJ'],
+  dependencies: ['taskC'],
+}, {
+  title: 'Task F',
+  id: 'taskF',
+  points: 40,
+  status: 'finished',
+  dependencies: ['taskD'],
+}, {
+  title: 'Task G',
+  id: 'taskG',
+  points: 40,
+  status: 'finished',
+  dependencies: ['taskF'],
+}, {
+  title: 'Task H',
+  id: 'taskH',
+  points: 40,
+  dependencies: ['taskC', 'taskF'],
+}, {
+  title: 'Task I',
+  id: 'taskI',
+  points: 40,
+  dependencies: ['taskE'],
+}, {
+  title: 'Task J',
+  id: 'taskJ',
+  points: 40,
+  dependencies: ['taskE'],
+}, {
+  title: 'Task X',
+  id: 'taskX',
+  points: 40,
+  dependencies: [],
+}, {
+  title: 'Task Y',
+  id: 'taskY',
+  dependencies: [],
+}]
 
 export class TasksFlowChartStory extends React.Component<{}, {
   refreshCode: number,
+  tasksArray: ITaskGroupType,
 }> {
 
   constructor (props: any) {
     super(props)
     this.state = {
       refreshCode: 1,
+      tasksArray: startTasks,
     }
   }
 
   public render () {
 
-    const startTasks = [{
-      title: 'Task A',
-      id: 'taskA',
-      points: 20,
-      status: 'finished',
-      dependencies: [],
-    }, {
-      title: 'Task B',
-      id: 'taskB',
-      points: 30,
-      status: 'finished',
-      dependencies: ['taskA'],
-    }, {
-      title: 'Task C',
-      id: 'taskC',
-      points: 40,
-      status: 'finished',
-      dependencies: ['taskA'],
-    }, {
-      title: 'Task D',
-      id: 'taskD',
-      points: 40,
-      status: 'finished',
-      dependencies: [],
-    }, {
-      title: 'Task E',
-      id: 'taskE',
-      points: 40,
-      status: 'finished',
-      // dependencies: ['taskC', 'taskJ'],
-      dependencies: ['taskC'],
-    }, {
-      title: 'Task F',
-      id: 'taskF',
-      points: 40,
-      status: 'finished',
-      dependencies: ['taskD'],
-    }, {
-      title: 'Task G',
-      id: 'taskG',
-      points: 40,
-      status: 'finished',
-      dependencies: ['taskF'],
-    }, {
-      title: 'Task H',
-      id: 'taskH',
-      points: 40,
-      dependencies: ['taskC', 'taskF'],
-    }, {
-      title: 'Task I',
-      id: 'taskI',
-      points: 40,
-      dependencies: ['taskE'],
-    }, {
-      title: 'Task J',
-      id: 'taskJ',
-      points: 40,
-      dependencies: ['taskE'],
-    }, {
-      title: 'Task X',
-      id: 'taskX',
-      points: 40,
-      dependencies: [],
-    }, {
-      title: 'Task Y',
-      id: 'taskY',
-      dependencies: [],
-    }]
+    const { tasksArray } = this.state
 
     return (
       <div>
@@ -95,23 +99,23 @@ export class TasksFlowChartStory extends React.Component<{}, {
         >Refresh
         </button>
         <TasksFlowChart
-          editable={false}
+          // editable={false}
           refreshCode={this.state.refreshCode.toString()}
           searchPlaceholder="Search For Tasks"
           backgroundImage={'http://localhost:3000/uploads/stock/khPiBGp_1545152212lar5rDPar6.jpg'}
-          tasks={startTasks}
-          // handleCreateRelation={({ from, to }) => {
-          //   console.log(from, to)
-          // }}
-          // handleDeleteRelation={({ from, to }) => {
-          //   console.log(from, to)
-          // }}
-          // handleDeleteTaskRelations={(task) => {
-          //   console.log(task)
-          // }}
-          // onChange={({ tasks, distances, chartRelations }) => {
-          //   console.log(tasks, distances, chartRelations)
-          // }}
+          tasks={tasksArray}
+          handleCreateRelation={({ from, to }) => {
+            console.log(from, to)
+          }}
+          handleDeleteRelation={({ from, to }) => {
+            console.log(from, to)
+          }}
+          handleDeleteTaskRelations={(task) => {
+            console.log(task)
+          }}
+          onChange={({ tasks, distances, chartRelations }) => {
+            console.log(tasks, distances, chartRelations)
+          }}
           startContent={() => (
             <p>PROJECT START</p>
           )}

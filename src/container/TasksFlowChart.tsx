@@ -1,6 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
-import { CustomInput, FlowChartWithStateAdvanced, IOnChangeCallback } from '../'
+import { CustomInput, FlowChartWithStateAdvanced, IAddedTasksArray, IOnChangeCallback } from '../'
 import { Content, Page, Sidebar, SidebarItem } from '../../stories/components'
 import { calculatePaths, forEach, generateRelations, getTaskRelations } from '../components/Advanced/utils'
 import { IChart, INode, ITasksFlowChart, ITasksFlowChartState, ITaskType, IUpdateTask } from '../types'
@@ -123,7 +123,7 @@ export class TasksFlowChart extends React.Component<ITasksFlowChart, ITasksFlowC
   }
 
   public refreshTasks (state: IChart, callback: () => void) {
-    const added = this.state.added
+    const added: IAddedTasksArray = []
     forEach(state.nodes, (n: INode) => {
       const { properties = {} } = n
       if (properties.taskId) {
